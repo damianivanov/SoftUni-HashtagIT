@@ -18,7 +18,7 @@ a {
 }
 
 a:hover {
-    color: #ffffff;
+  color: #fec503;
 }
 
 .text-primary {
@@ -114,7 +114,7 @@ img::-moz-selection {
 #mainNav .navbar-toggler {
   font-size: 12px;
   right: 0;
-  padding: 0px;
+  padding: 13px;
   text-transform: uppercase;
   color: white;
   border: 0;
