@@ -16,6 +16,7 @@
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Http;
+    using Microsoft.AspNetCore.Mvc;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
@@ -46,7 +47,10 @@
                         options.MinimumSameSitePolicy = SameSiteMode.None;
                     });
 
-            services.AddControllersWithViews();
+            services.AddControllersWithViews(options =>
+            {
+                options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute());
+            });
             services.AddRazorPages();
 
             services.AddSingleton(this.configuration);
@@ -57,8 +61,9 @@
             services.AddScoped<IDbQueryRunner, DbQueryRunner>();
 
             // Application services
-            // services.AddTransient<IEmailSender>(x => new SendGridEmailSender("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"));
             services.AddTransient<ISettingsService, SettingsService>();
+            services.AddTransient<IEmailSender>(x => new SendGridEmailSender("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"));
+            services.AddTransient<IHashtagSetsService, HashtagSetsService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

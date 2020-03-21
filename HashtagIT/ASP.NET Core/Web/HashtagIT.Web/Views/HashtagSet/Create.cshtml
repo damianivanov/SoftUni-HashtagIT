@@ -1,0 +1,14 @@
+﻿@model HashtagIT.Web.ViewModels.HashtagSets.HashtagSetCreateInputModel
+@{
+    this.ViewData["Title"] = "New Hashtag Set";
+    Layout = "~/Views/Shared/_NavBar.cshtml";
+ }
+
+<h1>@this.ViewData["Title"]</h1>   
+
+<form method="post" asp-action="Create">
+    <input asp-for="Text" />
+    <input asp-for="CategoryName" />
+    <input type="checkbox" asp-for="IsPrivate" />
+    <input type="submit" class="btn btn-primary" />
+</form>

@@ -1,5 +1,4 @@
 ﻿using System;
-
 using HashtagIT.Data;
 using HashtagIT.Data.Models;
 using Microsoft.AspNetCore.Hosting;
@@ -10,15 +9,13 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 [assembly: HostingStartup(typeof(HashtagIT.Web.Areas.Identity.IdentityHostingStartup))]
-
 namespace HashtagIT.Web.Areas.Identity
 {
     public class IdentityHostingStartup : IHostingStartup
     {
         public void Configure(IWebHostBuilder builder)
         {
-            builder.ConfigureServices((context, services) =>
-            {
+            builder.ConfigureServices((context, services) => {
             });
         }
     }

@@ -2,21 +2,12 @@
 @model RegisterModel
 @{
     ViewData["Title"] = "Register";
-    Layout = null;
+    Layout = "/Views/Shared/_NavBar.cshtml";
 }
 
-<h1>@ViewData["Title"]</h1>
+<h1 class="justify-content-center">@ViewData["Title"]</h1>
 
-<environment names="Development">
-    <link href="~/lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet" asp-append-version="true" />
-
-</environment>
-<environment names="Staging,Production">
-    <link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" asp-append-version="true" />
-
-</environment>
-
-<div class="container">
+<div class="row">
     <div class="col-md-4">
         <form asp-route-returnUrl="@Model.ReturnUrl" method="post">
             <h4>Create a new account.</h4>
@@ -26,6 +17,11 @@
                 <label asp-for="Input.Email"></label>
                 <input asp-for="Input.Email" class="form-control" />
                 <span asp-validation-for="Input.Email" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Input.Username"></label>
+                <input asp-for="Input.Username" class="form-control" />
+                <span asp-validation-for="Input.Username" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Input.Password"></label>
