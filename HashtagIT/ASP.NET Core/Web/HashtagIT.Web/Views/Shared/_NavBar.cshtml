@@ -21,30 +21,31 @@
 </head>
 
 <body>
-
-    <nav class="navbar-expand-lg navbar-dark" id="mainNav" style="background-color:#212529">
-        <div class="container" style="">
-            <button class="navbar-toggler" type="button" data-target="#navbarResponsive">
-                Menu
-                <i class="fas fa-bars"></i>
-            </button>
-            <div class="navbar-collapse collapse" style="">
-            <a class="navbar-brand" href="#page-top">@GlobalConstants.SystemName</a>
-                <ul class="navbar-nav text-uppercase ml-auto">
-                    <li class="nav-item">
-                        <a class="nav-link js-scroll-trigger" href="#services">Services</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link js-scroll-trigger" href="#portfolio">Portfolio</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link js-scroll-trigger" href="#contact">Contact</a>
-                    </li>
-                </ul>
-                <partial name="_LoginPartial" />
+    
+        <nav class="navbar-expand-lg navbar-dark" id="mainNav" style="background-color:#212529">
+            <div class="container" style="">
+                <button class="navbar-toggler" type="button" data-target="#navbarResponsive">
+                    Menu
+                    <i class="fas fa-bars"></i>
+                </button>
+                <div class="navbar-collapse collapse" style="">
+                    <a class="navbar-brand" href="#page-top">@GlobalConstants.SystemName</a>
+                    <ul class="navbar-nav text-uppercase ml-auto">
+                        <li class="nav-item">
+                            <a class="nav-link js-scroll-trigger" href="#services">Services</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link js-scroll-trigger" href="#portfolio">Portfolio</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link js-scroll-trigger" href="#contact">Contact</a>
+                        </li>
+                    </ul>
+                    <partial name="_LoginPartial" />
+                </div>
             </div>
-        </div>
-    </nav>
+        </nav>
+   
     <div class="container">
         <main role="main" class="pb-3">
             @this.RenderBody()
@@ -99,14 +100,14 @@
         <script src="~/lib/jquery-validation/dist/jquery.validate.js" asp-append-version="true"></script>
         <script src="~/lib/jquery-validation-unobtrusive/dist/jquery.validate.unobtrusive.js" asp-append-version="true"></script>
         <script src="~/lib/bootstrap/dist/js/bootstrap.js" asp-append-version="true"></script>
-        @*<script src="~/js/agency.js" asp-append-version="true"></script>*@
+        <script src="~/js/agency-static.js" asp-append-version="true"></script>
     </environment>
     <environment names="Staging,Production">
         <script src="~/lib/jquery/dist/jquery.min.js" asp-append-version="true"></script>
         <script src="~/lib/jquery-validation/dist/jquery.validate.min.js" asp-append-version="true"></script>
         <script src="~/lib/jquery-validation-unobtrusive/dist/jquery.validate.unobtrusive.js" asp-append-version="true"></script>
         <script src="~/lib/bootstrap/dist/js/bootstrap.min.js" asp-append-version="true"></script>
-        @*<script src="~/js/agency.min.js" asp-append-version="true"></script>*@
+        <script src="~/js/agency-static.js" asp-append-version="true"></script>
     </environment>
     @this.RenderSection("Scripts", required: false)
 </body>
