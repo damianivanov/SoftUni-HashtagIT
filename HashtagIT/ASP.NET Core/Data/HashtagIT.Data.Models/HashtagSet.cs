@@ -19,7 +19,7 @@
 
         public ApplicationUser User { get; set; }
 
-        public string CategoryName { get; set; }
+        public int CategoryId { get; set; }
 
         public Category Category { get; set; }
 

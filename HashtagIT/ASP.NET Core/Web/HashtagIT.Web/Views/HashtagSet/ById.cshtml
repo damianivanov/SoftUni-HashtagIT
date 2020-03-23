@@ -1,0 +1,48 @@
+﻿@model  HashtagIT.Web.ViewModels.HashtagSets.HashtagSetViewModel
+@{ 
+    Layout = "~/Views/Shared/_NavBar.cshtml";
+}
+
+<br />
+    <div class="container">
+        <div class="row d-flex justify-content-center">
+            <div class="card">
+                    <img class="profile-pic mr-3" src="">
+                    <div class="flex-column">
+                        <div>
+                        <label class="mb-0 font-weight-normal">@Model.UserUserName</label>
+                        @if (@Model.IsPrivate)
+                        {
+                            <div class="float-right">
+                                <i class="fas fa-user-lock"></i>
+                                <label>Private</label="">
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="float-right">
+                                <i class="fas fa-globe-americas"></i>
+                                <label>Public</label>
+                            </div>
+                        }
+                        </div>
+                    </div>
+                
+
+                <div class="row px-3 form-group"> 
+                    <label class="text-muted bg-light mt-4 mb-3" placeholder="">@Model.Text</label> 
+                </div>
+
+                <div class="row px-3">
+                    <div>
+                        <i class="fas fa-list"></i>
+                        <label>@Model.Category.Name</label>
+                    </div>
+                    <div class="ml-auto">
+                        <div class="btn btn-info" style="background-color:dodgerblue">Edit</div>
+                        <div class="btn btn-danger">Delete</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>

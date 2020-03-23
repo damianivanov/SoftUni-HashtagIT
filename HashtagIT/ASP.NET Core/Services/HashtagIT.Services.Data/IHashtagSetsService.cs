@@ -4,6 +4,8 @@
 
     public interface IHashtagSetsService
     {
-        Task<int> CreateAsync(string text, string userId, string categoryName, bool isPrivate);
+        Task<int> CreateAsync(string text, string userId, int categoryId, bool isPrivate);
+
+        T GetById<T>(int id);
     }
 }

@@ -17,22 +17,30 @@
     {
         private readonly IHashtagSetsService hashtagSetsService;
         private readonly UserManager<ApplicationUser> userManager;
+        private readonly ICategoriesService categoriesService;
 
-        public HashtagSetController(IHashtagSetsService hashtagSetsService, UserManager<ApplicationUser> userManager)
+        public HashtagSetController(IHashtagSetsService hashtagSetsService, UserManager<ApplicationUser> userManager, ICategoriesService categoriesService)
         {
             this.hashtagSetsService = hashtagSetsService;
             this.userManager = userManager;
+            this.categoriesService = categoriesService;
         }
 
         [Authorize]
         public IActionResult Create()
         {
-            return this.View();
+            var categories = this.categoriesService.GetAll<CategoryDropDownViewModel>();
+            var viewModel = new HashtagSetCreateInputModel
+            {
+                Categories = categories,
+            };
+            return this.View(viewModel);
         }
 
         public IActionResult ById(int id)
         {
-            return this.View();
+            var hashtagViewModel = this.hashtagSetsService.GetById<HashtagSetViewModel>(id);
+            return this.View(hashtagViewModel);
         }
 
         [HttpPost]
@@ -41,10 +49,10 @@
             if (!this.ModelState.IsValid)
             {
                 return this.View(inputModel);
-            }   
+            }
 
             var user = await this.userManager.GetUserAsync(this.User);
-            var hashtagSetId = await this.hashtagSetsService.CreateAsync(inputModel.Text, user.Id, inputModel.CategoryName, inputModel.IsPrivate);
+            var hashtagSetId = await this.hashtagSetsService.CreateAsync(inputModel.Text, user.Id, inputModel.CategoryId, inputModel.IsPrivate);
             return this.RedirectToAction("ById", new { id = hashtagSetId });
         }
     }
