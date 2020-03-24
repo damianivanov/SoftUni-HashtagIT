@@ -1,5 +1,6 @@
 ﻿namespace HashtagIT.Services.Data
 {
+    using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
 
@@ -36,6 +37,19 @@
                     .Where(h => h.Id == id)
                     .To<T>()
                     .FirstOrDefault();
+        }
+
+        public IEnumerable<T> GetAll<T>(string id)
+        {
+            return this.hashtagsetsRepository.All()
+                   .Where(h => h.UserId == id).To<T>().ToList();
+        }
+
+        public async Task DeleteById(int id)
+        {
+            var toRemove = this.hashtagsetsRepository.All().Where(h => h.Id == id).FirstOrDefault();
+            this.hashtagsetsRepository.Delete(toRemove);
+            await this.hashtagsetsRepository.SaveChangesAsync();
 
         }
     }
