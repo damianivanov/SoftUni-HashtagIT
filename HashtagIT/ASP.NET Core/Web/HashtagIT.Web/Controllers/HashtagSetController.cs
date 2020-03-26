@@ -37,12 +37,6 @@
             return this.View(viewModel);
         }
 
-        public IActionResult ById(int id)
-        {
-            var hashtagViewModel = this.hashtagSetsService.GetById<HashtagSetViewModel>(id);
-            return this.View(hashtagViewModel);
-        }
-
         [HttpPost]
         public async Task<IActionResult> Create(HashtagSetCreateInputModel inputModel)
         {
@@ -54,6 +48,13 @@
             var user = await this.userManager.GetUserAsync(this.User);
             var hashtagSetId = await this.hashtagSetsService.CreateAsync(inputModel.Text, user.Id, inputModel.CategoryId, inputModel.IsPrivate);
             return this.RedirectToAction("MySets");
+        }
+
+        [Authorize]
+        public IActionResult ById(int id)
+        {
+            var hashtagViewModel = this.hashtagSetsService.GetById<HashtagSetViewModel>(id);
+            return this.View(hashtagViewModel);
         }
 
         [Authorize]
@@ -70,6 +71,7 @@
             return this.View(viewModel);
         }
 
+        [Authorize]
         public async Task<IActionResult> Delete(int id)
         {
             var user = await this.userManager.GetUserAsync(this.User);
