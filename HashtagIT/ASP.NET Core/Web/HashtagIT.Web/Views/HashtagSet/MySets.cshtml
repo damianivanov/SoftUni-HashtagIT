@@ -3,23 +3,26 @@
     Layout = "~/Views/Shared/_NavBar.cshtml";
 }
 
-<div class="container">
-    <div>
-        <i class="fas fa-user"></i>
-        <label class="font-weight-bold">@Model.UserName</label>
-    </div>
-    @foreach (var hashtagSet in @Model.HashtagSets)
-    {
-        <div class="row px-3 form-group">
-            <label class="text-muted bg-light mt-4 mb-3" placeholder="">@hashtagSet.Text</label>
-            <div>
-                <i class="fas fa-list"></i>
-                <label>@hashtagSet.Category.Name</label>
-            </div>
-                <div class="ml-auto">
-                    <a href="/HashtagSet/Delete/@hashtagSet.Id" class="btn btn-danger">Delete</a>
-                </div>
-        </div>
-    }
+    <div class="container">
 
-</div>
+            <div style="text-align:center">
+                <h1 style="font-family: 'Kaushan Script', 'Arial Narrow', Arial, sans-serif">My Hashtag Sets</h1>
+                <i class="fas fa-user" style="color: #fed136"></i>
+                <label style="font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif">@Model.UserName</label>
+                <div class="ml-auto">
+                    <a href="/HashtagSet/Create" class="btn btn-primary">Create</a>
+                </div>
+            </div>
+        <br />
+        <div>
+            @foreach (var hashtagSet in @Model.HashtagSets)
+            {
+                <div class="row px-3 form-group">
+                    <a href="/HashtagSet/ById/@hashtagSet.Id">
+                        <label class="text-dark bg-light">@hashtagSet.Text</label>
+                    </a>
+                </div>
+            }
+        </div>
+
+    </div>

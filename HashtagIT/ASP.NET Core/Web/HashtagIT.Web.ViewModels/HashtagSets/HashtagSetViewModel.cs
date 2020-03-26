@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
     using System.Text;
 
     using HashtagIT.Data.Models;
@@ -22,6 +23,9 @@
         public int CategoryId { get; set; }
 
         public Category Category { get; set; }
+
+        public int HashtagCount => this.Text.Split(new[] { ' ', '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries)
+                .ToList().Count();
 
         public int VotesCount { get; set; }
 

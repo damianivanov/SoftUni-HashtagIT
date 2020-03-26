@@ -14,6 +14,6 @@
 
         IEnumerable<T> GetAll<T>(string id);
 
-        Task DeleteById(int id);
+        Task DeleteById(int id, string userId);
     }
 }

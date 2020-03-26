@@ -6,37 +6,34 @@
 <br />
 <div class="container">
     <div class="row d-flex justify-content-center">
-        <div class="card">
-            <img class="profile-pic mr-3" src="">
-            <div class="flex-column">
-                <div>
-                    <label class="font-weight-bold">@Model.UserUserName</label>
-                </div>
-
-                <div class="row px-3 form-group">
-                    <label class="text-muted bg-light mt-4 mb-3" placeholder="">@Model.Text</label>
-                </div>
-
-                <div class="row px-3">
-                    <div>
-                        <i class="fas fa-list"></i>
-                        <label>@Model.Category.Name</label>
-                        @if (@Model.IsPrivate)
-                        {
-
-                            <i class="fas fa-user-lock"></i>
-                            <label>Private</label>
-                        }
-                        else
-                        {
-                            <i class="fas fa-globe-americas"></i>
-                            <label>Public</label>
-                        }
+        <div class="rounded-right">
+            <div>
+                <i class="fas fa-user" style="color: #fed136"></i>
+                <label class="font-weight-bold">@Model.UserUserName</label>
+            </div>
+            <div class="row px-3">
+                <label class="text-dark bg-light mt-4 mb-3" placeholder="">@Model.Text</label>
+                <p>
+                    <i class="fas fa-list"></i>
+                    <label>@Model.Category.Name</label> |
+                    @if (@Model.IsPrivate)
+                    {
+                        <i class="fas fa-user-lock"></i>
+                        <label>Private</label>
+                    }
+                    else
+                    {
+                        <i class="fas fa-globe-americas"></i>
+                        <label>Public</label>
+                    } |
+                    <i class="far fa-clock"></i>
+                    <label class="font-italic">@Model.CreatedOn.ToString()</label> |
+                    <i class="fas fa-hashtag"></i>
+                    <label class="text-danger">Hashtags: @Model.HashtagCount</label>
+                    <div class="ml-auto">
+                        <a href="/HashtagSet/Delete/@Model.Id" class="btn btn-danger">Delete</a>
                     </div>
-                    <div class="ml-auto">                     
-                        <a  href="/HashtagSet/Delete/@Model.Id" class="btn btn-danger">Delete</a> 
-                    </div>
-                </div>
+                </p>
             </div>
         </div>
     </div>

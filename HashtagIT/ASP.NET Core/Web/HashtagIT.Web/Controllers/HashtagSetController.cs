@@ -53,7 +53,7 @@
 
             var user = await this.userManager.GetUserAsync(this.User);
             var hashtagSetId = await this.hashtagSetsService.CreateAsync(inputModel.Text, user.Id, inputModel.CategoryId, inputModel.IsPrivate);
-            return this.RedirectToAction("ById", new { id = hashtagSetId });
+            return this.RedirectToAction("MySets");
         }
 
         [Authorize]
@@ -63,7 +63,7 @@
             var hashtagSets = this.hashtagSetsService.GetAll<HashtagSetViewModel>(user.Id);
             var viewModel = new AllHashtagSetsByUserViewModel
             {
-                HashtagSets = hashtagSets,
+                HashtagSets = hashtagSets.OrderByDescending(h => h.CreatedOn).ToList(),
                 UserName = user.UserName,
             };
 
@@ -72,7 +72,8 @@
 
         public async Task<IActionResult> Delete(int id)
         {
-            await this.hashtagSetsService.DeleteById(id);
+            var user = await this.userManager.GetUserAsync(this.User);
+            await this.hashtagSetsService.DeleteById(id, user.Id);
             return this.RedirectToAction("MySets");
         }
     }
