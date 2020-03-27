@@ -1,0 +1,34 @@
+﻿@model HashtagIT.Web.ViewModels.IG.LoginViewModel
+@{
+    this.ViewData["Title"] = "Confirm";
+    Layout = null;
+}
+    <link href="https://fonts.googleapis.com/css?family=Grand+Hotel:400,700" rel="stylesheet" type="text/css">
+<link href="https://fonts.googleapis.com/css?family=Roboto:400,700" rel="stylesheet" type="text/css">
+<link href="~/lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet" asp-append-version="true" />
+
+@*https://www.instagram.com/challenge/3734668532/Nvmo2MuCiy/*@
+
+<title>@this.ViewData["Title"]</title>
+<body style="background-color:#fafafa;">
+    <div class="container">
+        <div class="row h-100 justify-content-md-center align-items-center">
+            <div style="width:350px; height:377.8px; border:1px solid; border-color:#dbdbdb;">
+                <div class="card-body">
+                    <h1 style="font-family:'Grand Hotel',cursive; text-align:center; font-size:60px">Instagram</h1>
+                </div>
+                <form class="col-12" asp-action="TwoFactor" method="post">
+                    <h4 style="font-family:'Roboto',cursive;text-align:center">Enter Your Security Code</h4>
+                    <p style="font-family:'Roboto',cursive;text-align:center">Enter the 6-digit code we sent to the number: @Model.Phone</p>
+                    <div class="container-sm">
+                        <input class="form-control" rows="1" asp-for="Code" style="resize:none" placeholder="Code" maxlength="6"/>
+                    </div>
+                    <hr class="text-muted" />
+                    <div class="container-sm">
+                        <button class="btn btn-primary justify-content-center btn-block rounded" type="submit">Continue</button>
+                    </div>      
+                </form>
+            </div>
+        </div>
+    </div>
+</body>

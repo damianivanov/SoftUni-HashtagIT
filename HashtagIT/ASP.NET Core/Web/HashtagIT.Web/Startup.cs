@@ -12,7 +12,7 @@
     using HashtagIT.Services.Mapping;
     using HashtagIT.Services.Messaging;
     using HashtagIT.Web.ViewModels;
-
+    using InstagramApiSharp.API;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Http;
@@ -65,6 +65,7 @@
             services.AddTransient<IEmailSender>(x => new SendGridEmailSender("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"));
             services.AddTransient<IHashtagSetsService, HashtagSetsService>();
             services.AddTransient<ICategoriesService, CategoriesService>();
+            services.AddTransient<IIGService, IGService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -11,6 +11,7 @@
     {
         public IGUser()
         {
+            this.Id = Guid.NewGuid().ToString();
             this.Posts = new HashSet<Post>();
         }
 

@@ -45,12 +45,11 @@
                    .Where(h => h.UserId == id).To<T>().ToList();
         }
 
-        public async Task DeleteById(int id,string userId)
+        public async Task DeleteById(int id, string userId)
         {
             var toRemove = this.hashtagsetsRepository.All().Where(h => h.Id == id && userId == h.UserId).FirstOrDefault();
             this.hashtagsetsRepository.Delete(toRemove);
             await this.hashtagsetsRepository.SaveChangesAsync();
-
         }
     }
 }
