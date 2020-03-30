@@ -13,37 +13,56 @@
     public class IGService : IIGService
     {
         private readonly IDeletableEntityRepository<IGUser> igUsersRepository;
+        private readonly API api;
         private IInstaApi instaApi;
 
-        public IGService(IDeletableEntityRepository<IGUser> igUsersRepository)
+        public IGService(IDeletableEntityRepository<IGUser> igUsersRepository, API api)
         {
             this.igUsersRepository = igUsersRepository;
+            this.api = api;
         }
 
         public async Task<string> Login(string userId, string username, string password)
         {
+            this.instaApi = await this.api.Login(username, password);
+            if (!this.instaApi.IsUserAuthenticated)
+            {
+                var challenge = await this.instaApi.GetChallengeRequireVerifyMethodAsync();
+                return challenge.Value.StepData.PhoneNumber;
+            }
+
+            // succsefull login
             var user = new UserSessionData
             {
                 UserName = username,
                 Password = password,
             };
-            this.instaApi = InstaApiBuilder.CreateBuilder()
-                .SetUser(user).Build();
+            this.Add(userId, user);
+            return string.Empty;
+        }
 
-                // login
-            var logInResult = await this.instaApi.LoginAsync();
-            if (!logInResult.Succeeded)
+        public async Task<bool> TwoFactor(string username, string password, string code, string userId)
+        {
+            this.instaApi = this.api.GetInstance(username);
+            var verifyLogin = await this.instaApi.VerifyCodeForChallengeRequireAsync(code);
+            if (this.instaApi.IsUserAuthenticated)
             {
-                var challenge = await this.instaApi.GetChallengeRequireVerifyMethodAsync();
-                if (challenge.Succeeded)
+                var user = new UserSessionData
                 {
-                    var phoneNumber = await this.instaApi.RequestVerifyCodeToSMSForChallengeRequireAsync();
-                    return phoneNumber.Value.StepData.PhoneNumberPreview;
-                }
+                    UserName = username,
+                    Password = password,
+                };
+                this.Add(userId, user);
+                return true;
             }
 
-            var followersCount = await this.instaApi.UserProcessor.GetUserFollowersAsync(username, PaginationParameters.Empty);
-            var followingCount = await this.instaApi.UserProcessor.GetUserFollowingAsync(username, PaginationParameters.Empty);
+            return false;
+        }
+
+        private async void Add(string userId, UserSessionData user)
+        {
+            var followersCount = await this.instaApi.UserProcessor.GetUserFollowersAsync(user.UserName, PaginationParameters.Empty);
+            var followingCount = await this.instaApi.UserProcessor.GetUserFollowingAsync(user.UserName, PaginationParameters.Empty);
             IGUser igUser = new IGUser
             {
                 UserId = userId,
@@ -65,15 +84,6 @@
             }
 
             await this.igUsersRepository.SaveChangesAsync();
-            return string.Empty;
-        }
-
-        public async Task<bool> TwoFactor(string code, string phoneNumber)
-        {
-                var verifyLogin = await this.instaApi.VerifyCodeForChallengeRequireAsync(code);
-                var info = await this.instaApi.GetLoggedInChallengeDataInfoAsync();
-
-                return verifyLogin.Succeeded;
         }
     }
 }

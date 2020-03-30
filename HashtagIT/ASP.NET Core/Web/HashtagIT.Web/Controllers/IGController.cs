@@ -17,28 +17,26 @@
     {
         private readonly IIGService iGService;
         private readonly UserManager<ApplicationUser> userManager;
-        private readonly IInstaApi ap;
+        private readonly API api;
 
-        public IGController(IIGService iGService, UserManager<ApplicationUser> userManager)
+        public IGController(IIGService iGService, UserManager<ApplicationUser> userManager, API api)
         {
             this.iGService = iGService;
             this.userManager = userManager;
+            this.api = api;
         }
 
         [Authorize]
-        public IActionResult TwoFactor(string phone)
+        [HttpGet]
+        public IActionResult TwoFactor(LoginViewModel loginView, bool post = false)
         {
-            var login = new LoginViewModel
-            {
-                Phone = phone,
-            };
-            return this.View(login);
+            return this.View(loginView);
         }
 
         [HttpPost]
         public async Task<IActionResult> TwoFactor(LoginViewModel viewModel)
         {
-            var result = await this.iGService.TwoFactor(viewModel.Code, viewModel.Phone);
+            var result = await this.iGService.TwoFactor(viewModel.IGUserName, viewModel.Password, viewModel.Code, viewModel.UserId);
 
             if (!result)
             {
@@ -65,10 +63,12 @@
             var user = await this.userManager.GetUserAsync(this.User);
             var phone = await this.iGService.Login(user.Id, viewModel.IGUserName, viewModel.Password);
             viewModel.Phone = phone;
+            string encryptedPassword = Cipher.Encrypt(viewModel.Password, viewModel.IGUserName);
+            viewModel.Password = encryptedPassword;
+            viewModel.UserId = user.Id;
             if (phone != string.Empty)
             {
-
-                return this.RedirectToAction("TwoFactor", new { phone = viewModel.Phone });
+                return this.RedirectToAction("TwoFactor", viewModel);
             }
 
             return this.View("IGIndex");

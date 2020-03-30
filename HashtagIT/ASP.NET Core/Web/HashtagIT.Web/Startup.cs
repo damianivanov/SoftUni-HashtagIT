@@ -1,5 +1,6 @@
 ﻿namespace HashtagIT.Web
 {
+    using System.Collections.Generic;
     using System.Reflection;
 
     using HashtagIT.Data;
@@ -62,10 +63,13 @@
 
             // Application services
             services.AddTransient<ISettingsService, SettingsService>();
-            services.AddTransient<IEmailSender>(x => new SendGridEmailSender("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"));
+            services.AddTransient<IEmailSender>(
+                serviceProvider => new SendGridEmailSender(this.configuration["SendGrid:ApiKey"]));
             services.AddTransient<IHashtagSetsService, HashtagSetsService>();
             services.AddTransient<ICategoriesService, CategoriesService>();
             services.AddTransient<IIGService, IGService>();
+            API api = new API();
+            services.AddSingleton(api);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

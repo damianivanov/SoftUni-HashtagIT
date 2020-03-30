@@ -21,7 +21,12 @@
                     <h4 style="font-family:'Roboto',cursive;text-align:center">Enter Your Security Code</h4>
                     <p style="font-family:'Roboto',cursive;text-align:center">Enter the 6-digit code we sent to the number: @Model.Phone</p>
                     <div class="container-sm">
-                        <input class="form-control" rows="1" asp-for="Code" style="resize:none" placeholder="Code" maxlength="6"/>
+                        <input class="form-control" rows="1" asp-for="Code" style="resize:none" placeholder="Code" maxlength="6" />
+                        <div style="display:none">
+                            @Html.HiddenFor(v => v.IGUserName)
+                            @Html.HiddenFor(v => v.UserId)
+                            @Html.PasswordFor(v=>v.Password)
+                        </div>
                     </div>
                     <hr class="text-muted" />
                     <div class="container-sm">

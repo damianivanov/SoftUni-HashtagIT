@@ -6,6 +6,6 @@
     {
         Task<string> Login(string userId, string username, string password);
 
-        Task<bool> TwoFactor(string code, string phoneNumber);
+        Task<bool> TwoFactor(string username, string password, string code, string userId);
     }
 }
