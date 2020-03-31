@@ -44,7 +44,7 @@
         public async Task<bool> TwoFactor(string username, string password, string code, string userId)
         {
             this.instaApi = this.api.GetInstance(username);
-            var verifyLogin = await this.instaApi.VerifyCodeForChallengeRequireAsync(code);
+            await this.instaApi.VerifyCodeForChallengeRequireAsync(code);
             if (this.instaApi.IsUserAuthenticated)
             {
                 var user = new UserSessionData
