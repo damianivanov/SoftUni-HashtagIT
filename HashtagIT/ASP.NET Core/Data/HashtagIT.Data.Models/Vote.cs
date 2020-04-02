@@ -2,21 +2,21 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations.Schema;
+    using System.ComponentModel.DataAnnotations;
     using System.Text;
 
     using HashtagIT.Data.Common.Models;
-    using InstagramApiSharp.Classes.Models;
 
-    public class Post : BaseDeletableModel<int>
+    public class Vote : BaseModel<int>
     {
+        [Required]
         public int HashtagSetId { get; set; }
 
         public virtual HashtagSet HashtagSet { get; set; }
 
-        public string PostUrl { get; set; }
+        [Required]
+        public string UserId { get; set; }
 
-        [NotMapped]
-        public InstaMedia InstaMedia { get; set; }
+        public virtual ApplicationUser User { get; set; }
     }
 }

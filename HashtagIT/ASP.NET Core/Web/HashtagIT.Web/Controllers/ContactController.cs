@@ -43,7 +43,6 @@
                 Email = viewModel.Email,
                 Subject = viewModel.Subject,
                 Content = viewModel.Content,
-
             };
             await this.contactRepository.AddAsync(contactFormEntry);
             await this.contactRepository.SaveChangesAsync();

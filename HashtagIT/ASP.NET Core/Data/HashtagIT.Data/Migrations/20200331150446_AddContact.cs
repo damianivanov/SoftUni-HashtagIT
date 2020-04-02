@@ -1,8 +1,9 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore.Migrations;
-
-namespace HashtagIT.Data.Migrations
+﻿namespace HashtagIT.Data.Migrations
 {
+    using System;
+
+    using Microsoft.EntityFrameworkCore.Migrations;
+
     public partial class AddContact : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -18,7 +19,7 @@ namespace HashtagIT.Data.Migrations
                     FullName = table.Column<string>(nullable: true),
                     Email = table.Column<string>(nullable: true),
                     Subject = table.Column<string>(nullable: true),
-                    Content = table.Column<string>(nullable: true)
+                    Content = table.Column<string>(nullable: true),
                 },
                 constraints: table =>
                 {

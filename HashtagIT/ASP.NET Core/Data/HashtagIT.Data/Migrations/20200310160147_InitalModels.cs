@@ -1,8 +1,9 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore.Migrations;
-
-namespace HashtagIT.Data.Migrations
+﻿namespace HashtagIT.Data.Migrations
 {
+    using System;
+
+    using Microsoft.EntityFrameworkCore.Migrations;
+
     public partial class InitalModels : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -18,7 +19,7 @@ namespace HashtagIT.Data.Migrations
                     CreatedOn = table.Column<DateTime>(nullable: false),
                     ModifiedOn = table.Column<DateTime>(nullable: true),
                     IsDeleted = table.Column<bool>(nullable: false),
-                    DeletedOn = table.Column<DateTime>(nullable: true)
+                    DeletedOn = table.Column<DateTime>(nullable: true),
                 },
                 constraints: table =>
                 {
@@ -47,7 +48,7 @@ namespace HashtagIT.Data.Migrations
                     CreatedOn = table.Column<DateTime>(nullable: false),
                     ModifiedOn = table.Column<DateTime>(nullable: true),
                     IsDeleted = table.Column<bool>(nullable: false),
-                    DeletedOn = table.Column<DateTime>(nullable: true)
+                    DeletedOn = table.Column<DateTime>(nullable: true),
                 },
                 constraints: table =>
                 {
@@ -65,7 +66,7 @@ namespace HashtagIT.Data.Migrations
                     IsDeleted = table.Column<bool>(nullable: false),
                     DeletedOn = table.Column<DateTime>(nullable: true),
                     Name = table.Column<string>(nullable: true),
-                    ImageUrl = table.Column<string>(nullable: true)
+                    ImageUrl = table.Column<string>(nullable: true),
                 },
                 constraints: table =>
                 {
@@ -83,7 +84,7 @@ namespace HashtagIT.Data.Migrations
                     IsDeleted = table.Column<bool>(nullable: false),
                     DeletedOn = table.Column<DateTime>(nullable: true),
                     Name = table.Column<string>(nullable: true),
-                    Value = table.Column<string>(nullable: true)
+                    Value = table.Column<string>(nullable: true),
                 },
                 constraints: table =>
                 {
@@ -98,7 +99,7 @@ namespace HashtagIT.Data.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     RoleId = table.Column<string>(nullable: false),
                     ClaimType = table.Column<string>(nullable: true),
-                    ClaimValue = table.Column<string>(nullable: true)
+                    ClaimValue = table.Column<string>(nullable: true),
                 },
                 constraints: table =>
                 {
@@ -119,7 +120,7 @@ namespace HashtagIT.Data.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     UserId = table.Column<string>(nullable: false),
                     ClaimType = table.Column<string>(nullable: true),
-                    ClaimValue = table.Column<string>(nullable: true)
+                    ClaimValue = table.Column<string>(nullable: true),
                 },
                 constraints: table =>
                 {
@@ -139,7 +140,7 @@ namespace HashtagIT.Data.Migrations
                     LoginProvider = table.Column<string>(nullable: false),
                     ProviderKey = table.Column<string>(nullable: false),
                     ProviderDisplayName = table.Column<string>(nullable: true),
-                    UserId = table.Column<string>(nullable: false)
+                    UserId = table.Column<string>(nullable: false),
                 },
                 constraints: table =>
                 {
@@ -157,7 +158,7 @@ namespace HashtagIT.Data.Migrations
                 columns: table => new
                 {
                     UserId = table.Column<string>(nullable: false),
-                    RoleId = table.Column<string>(nullable: false)
+                    RoleId = table.Column<string>(nullable: false),
                 },
                 constraints: table =>
                 {
@@ -183,7 +184,7 @@ namespace HashtagIT.Data.Migrations
                     UserId = table.Column<string>(nullable: false),
                     LoginProvider = table.Column<string>(nullable: false),
                     Name = table.Column<string>(nullable: false),
-                    Value = table.Column<string>(nullable: true)
+                    Value = table.Column<string>(nullable: true),
                 },
                 constraints: table =>
                 {
@@ -211,7 +212,7 @@ namespace HashtagIT.Data.Migrations
                     IGProfileId = table.Column<long>(nullable: false),
                     ProfilePicUrl = table.Column<string>(nullable: true),
                     FollowersCount = table.Column<long>(nullable: false),
-                    FollowingCount = table.Column<long>(nullable: false)
+                    FollowingCount = table.Column<long>(nullable: false),
                 },
                 constraints: table =>
                 {
@@ -224,7 +225,7 @@ namespace HashtagIT.Data.Migrations
                         onDelete: ReferentialAction.Restrict);
                 });
 
-            migrationBuilder.CreateTable(
+            _ = migrationBuilder.CreateTable(
                 name: "HashtagSets",
                 columns: table => new
                 {
@@ -238,7 +239,7 @@ namespace HashtagIT.Data.Migrations
                     CategoryName = table.Column<string>(nullable: true),
                     CategoryId = table.Column<int>(nullable: true),
                     IsPrivate = table.Column<bool>(nullable: false),
-                    Text = table.Column<string>(nullable: true)
+                    Text = table.Column<string>(nullable: true),
                 },
                 constraints: table =>
                 {
@@ -269,7 +270,7 @@ namespace HashtagIT.Data.Migrations
                     DeletedOn = table.Column<DateTime>(nullable: true),
                     Name = table.Column<string>(nullable: true),
                     PostCount = table.Column<long>(nullable: false),
-                    HashtagSetId = table.Column<int>(nullable: true)
+                    HashtagSetId = table.Column<int>(nullable: true),
                 },
                 constraints: table =>
                 {
@@ -294,7 +295,7 @@ namespace HashtagIT.Data.Migrations
                     DeletedOn = table.Column<DateTime>(nullable: true),
                     HashtagSetId = table.Column<int>(nullable: false),
                     PostUrl = table.Column<string>(nullable: true),
-                    IGUserId = table.Column<string>(nullable: true)
+                    IGUserId = table.Column<string>(nullable: true),
                 },
                 constraints: table =>
                 {

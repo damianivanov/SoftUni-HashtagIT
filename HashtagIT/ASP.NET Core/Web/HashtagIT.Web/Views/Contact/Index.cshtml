@@ -1,60 +1,62 @@
 ﻿@inject Microsoft.Extensions.Configuration.IConfiguration Configuration
 @model HashtagIT.Web.ViewModels.Contact.ContactFormViewModel
 
-<div class="container">
-    <div class="row">
-        <div class="col-lg-12 text-center">
-            <h2 class="section-heading text-uppercase">Contact Us</h2>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-lg-12">
-            <form method="post">
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label asp-for="FullName"></label>
-                            <input class="form-control" type="text" placeholder="Your Name *" required="required" asp-for="FullName">
-                            <span asp-validation-for="FullName" class="text-danger"></span>
-                        </div>
-                        <div class="form-group">
-                            <label asp-for="Email"></label>
-                            <input class="form-control" type="email" placeholder="Your Email *" required="required" asp-for="Email">
-                            <span asp-validation-for="Email" class="text-danger"></span>
-                        </div>
-                        <div class="form-group">
-                            <label asp-for="Subject"></label>
-                            <input class="form-control"  type="text" placeholder="Your Subject *" required="required" asp-for="Subject">
-                            <span asp-validation-for="Subject" class="text-danger"></span>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label asp-for="Content"></label>
-                            <textarea class="form-control" placeholder="Your Message *" style=" height:200px; resize:none" asp-for="Content"></textarea>
-                            <span asp-validation-for="Content" class="text-danger"></span>
-                        </div>
-                    </div>
-                    <div class="clearfix"></div>
-                    <div class="col-lg-12 text-center">
-                        <div id="success"></div>
-                        <button class="btn btn-primary btn-xl text-uppercase" type="submit">Send Message</button>
-                    </div>
+    <section id="contact">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <h2 class="section-heading text-uppercase text-white">Contact Us</h2>
                 </div>
-            </form>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <form method="post">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label asp-for="FullName"></label>
+                                    <input class="form-control" type="text" placeholder="Your Name *" required="required" asp-for="FullName">
+                                    <span asp-validation-for="FullName" class="text-danger"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="Email"></label>
+                                    <input class="form-control" type="email" placeholder="Your Email *" required="required" asp-for="Email">
+                                    <span asp-validation-for="Email" class="text-danger"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="Subject"></label>
+                                    <input class="form-control" type="text" placeholder="Your Subject *" required="required" asp-for="Subject">
+                                    <span asp-validation-for="Subject" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label asp-for="Content"></label>
+                                    <textarea class="form-control" placeholder="Your Message *" style=" height:310px; resize:none" asp-for="Content"></textarea>
+                                    <span asp-validation-for="Content" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="clearfix"></div>
+                            <div class="col-lg-12 text-center">
+                                <div id="success"></div>
+                                <button class="btn btn-primary btn-xl text-uppercase" type="submit">Send Message</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
         </div>
-    </div>
-</div>
+    </section>
 
-@*Google doesn't support localhost*@
-@*@section Scripts
-{
-    <script src="https://www.google.com/recaptcha/api.js?render=@this.Configuration["GoogleReCaptcha:Key"]"></script>
-    <script>
-        grecaptcha.ready(function () {
-            grecaptcha.execute('@this.Configuration["GoogleReCaptcha:Key"]', { action: 'contact_form' }).then(function (token) {
-                document.getElementById("RecaptchaValue").value = token;
-            });
-        });
-    </script>
-}*@
+        @*Google doesn't support localhost*@
+        @*@section Scripts
+        {
+            <script src="https://www.google.com/recaptcha/api.js?render=@this.Configuration["GoogleReCaptcha:Key"]"></script>
+            <script>
+                grecaptcha.ready(function () {
+                    grecaptcha.execute('@this.Configuration["GoogleReCaptcha:Key"]', { action: 'contact_form' }).then(function (token) {
+                        document.getElementById("RecaptchaValue").value = token;
+                    });
+                });
+            </script>
+        }*@

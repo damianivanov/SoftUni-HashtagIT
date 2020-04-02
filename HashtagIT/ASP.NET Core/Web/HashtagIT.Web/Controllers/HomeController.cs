@@ -2,6 +2,7 @@
 {
     using System.Diagnostics;
     using System.Threading.Tasks;
+
     using HashtagIT.Common;
     using HashtagIT.Data.Common.Repositories;
     using HashtagIT.Data.Models;
@@ -12,15 +13,6 @@
 
     public class HomeController : BaseController
     {
-        private readonly IEmailSender emailSender;
-        private readonly IRepository<ContactEntry> contactRepository;
-
-        public HomeController(IEmailSender emailSender, IRepository<ContactEntry> contactRepository)
-        {
-            this.emailSender = emailSender;
-            this.contactRepository = contactRepository;
-        }
-
         public IActionResult Index()
         {
             return this.View();
