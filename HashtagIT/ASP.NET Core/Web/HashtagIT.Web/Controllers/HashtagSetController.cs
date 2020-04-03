@@ -13,6 +13,7 @@
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
 
+    [Authorize]
     public class HashtagSetController : Controller
     {
         private readonly IHashtagSetsService hashtagSetsService;
@@ -26,7 +27,6 @@
             this.categoriesService = categoriesService;
         }
 
-        [Authorize]
         public IActionResult Create()
         {
             var categories = this.categoriesService.GetAll<CategoryDropDownViewModel>();
@@ -46,18 +46,16 @@
             }
 
             var user = await this.userManager.GetUserAsync(this.User);
-            var hashtagSetId = await this.hashtagSetsService.CreateAsync(inputModel.Text, user.Id, inputModel.CategoryId, inputModel.IsPrivate);
+            await this.hashtagSetsService.CreateAsync(inputModel.Text, user.Id, inputModel.CategoryId, inputModel.IsPrivate);
             return this.RedirectToAction("MySets");
         }
 
-        [Authorize]
         public IActionResult ById(int id)
         {
             var hashtagViewModel = this.hashtagSetsService.GetById<HashtagSetViewModel>(id);
             return this.View(hashtagViewModel);
         }
 
-        [Authorize]
         public async Task<IActionResult> MySets()
         {
             var user = await this.userManager.GetUserAsync(this.User);
@@ -71,12 +69,21 @@
             return this.View(viewModel);
         }
 
-        [Authorize]
         public async Task<IActionResult> Delete(int id)
         {
             var user = await this.userManager.GetUserAsync(this.User);
             await this.hashtagSetsService.DeleteById(id, user.Id);
             return this.RedirectToAction("MySets");
+        }
+
+        public IActionResult Public()
+        {
+            var hashtagSets = this.hashtagSetsService.GetPublic<HashtagSetViewModel>();
+            var viewModel = new AllPublicHashtagSetsViewModel
+            {
+                HashtagSets = hashtagSets,
+            };
+            return this.View(viewModel);
         }
     }
 }

@@ -52,6 +52,10 @@
             {
                 options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute());
             });
+            services.AddAntiforgery(options =>
+            {
+                options.HeaderName = "X-CSRF-TOKEN";
+            });
             services.AddRazorPages();
 
             services.AddSingleton(this.configuration);
@@ -68,6 +72,7 @@
             services.AddTransient<IHashtagSetsService, HashtagSetsService>();
             services.AddTransient<ICategoriesService, CategoriesService>();
             services.AddTransient<IIGService, IGService>();
+            services.AddTransient<IVotesService, VotesService>();
             API api = new API();
             services.AddSingleton(api);
         }

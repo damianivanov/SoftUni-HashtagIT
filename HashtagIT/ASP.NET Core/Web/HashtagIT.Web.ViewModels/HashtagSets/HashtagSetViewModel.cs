@@ -28,6 +28,5 @@
                 .ToList().Count();
 
         public int VotesCount { get; set; }
-
     }
 }

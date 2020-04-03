@@ -1,0 +1,72 @@
+﻿@model HashtagIT.Web.ViewModels.HashtagSets.AllPublicHashtagSetsViewModel
+@{
+    Layout = "~/Views/Shared/_NavBar.cshtml";
+}
+
+<div class="container">
+
+    <div style="text-align:center">
+        <h1 style="font-family: 'Kaushan Script', 'Arial Narrow', Arial, sans-serif">Public Hashtag Sets</h1>
+        <div class="ml-auto">
+            <a href="/HashtagSet/Create" class="btn btn-primary">Create</a>
+        </div>
+    </div>
+    <br />
+    <div>
+        @foreach (var hashtagSet in @Model.HashtagSets)
+        {
+            <div class="row justify-content-center">
+                <div class="rounded-right">
+                    <div>     
+                        <i class="fas fa-user" style="color: #fed136"></i>
+                        <label class="font-weight-bold">@hashtagSet.UserUserName</label>
+                    </div>
+                    <div class="row px-3">
+                        <article class="text-dark bg-light mb-3">@hashtagSet.Text</article>
+                        <div class="row px-3">
+                            <p>
+                                <i class="fas fa-list"></i>
+                                <label>@hashtagSet.Category.Name</label> |
+                                <i class="far fa-clock"></i>
+                                <label class="font-italic">@hashtagSet.CreatedOn.ToString("f")</label> |
+                                <i class="fas fa-hashtag"></i>
+                                <label class="text-danger">Hashtags: @hashtagSet.HashtagCount</label>
+                            </p>
+                            <div class="col align-content-lg-end">
+                                <form id="voteForm" method="post">
+                                    <a href="#" onclick="Vote(@hashtagSet.Id)">
+                                        <i class="far fa-star"></i>
+                                    </a>
+                                    <label class="@hashtagSet.Id">@hashtagSet.VotesCount</label>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <hr />
+        }
+    </div>
+</div>
+
+
+@section Scripts{
+
+    <script>
+        function Vote(hashtagSetId) {
+            var token = $('#voteForm input[name=__RequestVerificationToken]').val();
+            var json = hashtagSetId;
+            $.ajax({
+                url: "/api/votes",
+                type: "POST",
+                data: JSON.stringify(json),
+                contentType: "application/json charset=utf-8",
+                headers: {'X-CSRF-TOKEN':token},
+                dataType: "json",
+                success: function (data) {
+                    $("." + json).text(data.votesCount);
+                }
+            });
+        }
+    </script>
+}

@@ -23,7 +23,7 @@ namespace HashtagIT.Data.Models
         // Audit info
         public DateTime CreatedOn { get; set; }
 
-        public DateTime? ModifiedOn { get; set; }   
+        public DateTime? ModifiedOn { get; set; }
 
         // Deletable entity
         public bool IsDeleted { get; set; }

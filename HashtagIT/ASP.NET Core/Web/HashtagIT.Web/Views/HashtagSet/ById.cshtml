@@ -3,8 +3,8 @@
     Layout = "~/Views/Shared/_NavBar.cshtml";
 }
 
-<br />
 <div class="container">
+    <br />
     <div class="row d-flex justify-content-center">
         <div class="rounded-right">
             <div>
@@ -12,7 +12,7 @@
                 <label class="font-weight-bold">@Model.UserUserName</label>
             </div>
             <div class="row px-3">
-                <label class="text-dark bg-light mt-4 mb-3" placeholder="">@Model.Text</label>
+                <label class="text-dark bg-light mb-3" placeholder="">@Model.Text</label>
                 <p>
                     <i class="fas fa-list"></i>
                     <label>@Model.Category.Name</label> |
@@ -27,7 +27,7 @@
                         <label>Public</label>
                     } |
                     <i class="far fa-clock"></i>
-                    <label class="font-italic">@Model.CreatedOn.ToString()</label> |
+                    <label class="font-italic">@Model.CreatedOn.ToString("f")</label> |
                     <i class="fas fa-hashtag"></i>
                     <label class="text-danger">Hashtags: @Model.HashtagCount</label>
                     <div class="ml-auto">

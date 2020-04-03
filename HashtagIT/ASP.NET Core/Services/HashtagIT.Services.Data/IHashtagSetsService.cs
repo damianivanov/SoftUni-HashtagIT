@@ -15,5 +15,7 @@
         IEnumerable<T> GetAll<T>(string id);
 
         Task DeleteById(int id, string userId);
+
+        IEnumerable<T> GetPublic<T>();
     }
 }

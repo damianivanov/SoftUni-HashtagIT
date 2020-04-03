@@ -51,5 +51,16 @@
             this.hashtagsetsRepository.Delete(toRemove);
             await this.hashtagsetsRepository.SaveChangesAsync();
         }
+
+        public IEnumerable<T> GetPublic<T>()
+        {
+            var hashtagSets = this.hashtagsetsRepository
+                .All()
+                .Where(h => h.IsPrivate == false)
+                .OrderByDescending(h => h.CreatedOn)
+                .To<T>()
+                .ToList();
+            return hashtagSets;
+        }
     }
 }
