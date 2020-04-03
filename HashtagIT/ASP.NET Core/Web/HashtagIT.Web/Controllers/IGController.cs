@@ -27,6 +27,12 @@
         }
 
         [Authorize]
+        public IActionResult IGIndex()
+        {
+            return this.View();
+        }
+
+        [Authorize]
         [HttpGet]
         public IActionResult TwoFactor(LoginViewModel loginView, bool post = false)
         {
@@ -43,7 +49,7 @@
                 this.RedirectToAction("Login");
             }
 
-            return this.View("IGIndex");
+            return this.RedirectToAction("IGIndex");
         }
 
         [Authorize]

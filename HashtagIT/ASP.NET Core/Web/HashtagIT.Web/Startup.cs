@@ -73,6 +73,7 @@
             services.AddTransient<ICategoriesService, CategoriesService>();
             services.AddTransient<IIGService, IGService>();
             services.AddTransient<IVotesService, VotesService>();
+            services.AddTransient<IRandomizeService, RandomizeService>();
             API api = new API();
             services.AddSingleton(api);
         }

@@ -3,25 +3,33 @@
     Layout = "~/Views/Shared/_NavBar.cshtml";
 }
 
-    <div class="container">
+<div class="row justify-content-around">
+    <div class="align-left py-1">
+        <a type="button" class="btn btn-outline-dark" href="/HashtagSet/MySets">My Set</a>
+    </div>
+    <div class="align-right py-1">
+        <a type="submit" class="btn btn-outline-dark" href="/HashtagSet/Public">Public</a>
+    </div>
+</div>
 
-            <div style="text-align:center">
-                <h1 style="font-family: 'Kaushan Script', 'Arial Narrow', Arial, sans-serif">My Hashtag Sets</h1>
-                <i class="fas fa-user" style="color: #fed136"></i>
-                <label style="font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif">@Model.UserName</label>
-                <div class="ml-auto">
-                    <a href="/HashtagSet/Create" class="btn btn-primary">Create</a>
-                </div>
-            </div>
-        <br />
-        <div>
-            @foreach (var hashtagSet in @Model.HashtagSets)
-            {
-                <div class="row px-3 form-group">
-                    <a href="/HashtagSet/ById/@hashtagSet.Id">
-                        <label class="text-dark bg-light">@hashtagSet.Text</label>
-                    </a>
-                </div>
-            }
+    <div class="col" style="text-align:center">
+        <h1 style="font-family: 'Kaushan Script', 'Arial Narrow', Arial, sans-serif">My Hashtag Sets</h1>
+        <i class="fas fa-user" style="color: #fed136"></i>
+        <label style="font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif">@Model.UserName</label>
+        <div class="ml-auto">
+            <a href="/HashtagSet/Create" class="btn btn-primary">Create</a>
         </div>
+    </div>
+
+    <br />
+    <div class="container">
+        @foreach (var hashtagSet in @Model.HashtagSets)
+        {
+            <div class="row px-3 form-group">
+                <a href="/HashtagSet/ById/@hashtagSet.Id">
+                    <label class="text-dark bg-light">@hashtagSet.Text</label>
+                </a>
+            </div>
+            <hr />
+        }
     </div>

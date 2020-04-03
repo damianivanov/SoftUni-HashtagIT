@@ -3,6 +3,14 @@
     Layout = "~/Views/Shared/_NavBar.cshtml";
 }
 
+<div class="row justify-content-around">
+    <div class="align-left py-1">
+        <a type="button" class="btn btn-outline-dark" href="/HashtagSet/MySets">My Set</a>
+    </div>
+    <div class="align-right py-1">
+        <a type="submit" class="btn btn-outline-dark" href="/HashtagSet/Public">Public</a>
+    </div>
+</div>
 <div class="container">
 
     <div style="text-align:center">
@@ -17,12 +25,14 @@
         {
             <div class="row justify-content-center">
                 <div class="rounded-right">
-                    <div>     
+                    
                         <i class="fas fa-user" style="color: #fed136"></i>
                         <label class="font-weight-bold">@hashtagSet.UserUserName</label>
-                    </div>
-                    <div class="row px-3">
-                        <article class="text-dark bg-light mb-3">@hashtagSet.Text</article>
+                        <a class="btn btn-outline-warning align-right" href="#" onclick="Random(@hashtagSet.Id)">RANDOMIZE</a>
+                    <div class="row px-3 py-1">
+                        <form id="randomizeForm" method="post">
+                            <article class="text-dark bg-light mb-3" id="@hashtagSet.Id">@hashtagSet.Text</article>
+                        </form>
                         <div class="row px-3">
                             <p>
                                 <i class="fas fa-list"></i>
@@ -61,11 +71,27 @@
                 type: "POST",
                 data: JSON.stringify(json),
                 contentType: "application/json charset=utf-8",
-                headers: {'X-CSRF-TOKEN':token},
+                headers: { 'X-CSRF-TOKEN': token },
                 dataType: "json",
                 success: function (data) {
                     $("." + json).text(data.votesCount);
                 }
+            });
+        }
+        function Random(hashtags) {
+            var token = $('#randomizeForm input[name=__RequestVerificationToken]').val();
+            var json = hashtags;
+            $.ajax({
+                url: "/api/randomize",
+                type: "POST",
+                data: JSON.stringify(json),
+                contentType: "application/json charset=utf-8",
+                headers: { 'X-CSRF-TOKEN': token },
+                dataType: "json",
+                success: function (data) {
+                    $("#" + json).text(data.text);
+                }
+
             });
         }
     </script>

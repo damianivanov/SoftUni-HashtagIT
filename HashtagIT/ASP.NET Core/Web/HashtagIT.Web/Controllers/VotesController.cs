@@ -24,11 +24,11 @@
 
         [Authorize]
         [HttpPost]
-        public async Task<ActionResult<VoteResponseModel>> Post([FromBody]int inputModel)
+        public async Task<ActionResult<VoteResponseModel>> Post([FromBody]int id)
         {
             var userId = this.userManager.GetUserId(this.User);
-            await this.votesService.VoteAsync(userId, inputModel);
-            var votes = this.votesService.GetVotes(inputModel);
+            await this.votesService.VoteAsync(userId, id);
+            var votes = this.votesService.GetVotes(id);
             return new VoteResponseModel { VotesCount = votes };
         }
     }
