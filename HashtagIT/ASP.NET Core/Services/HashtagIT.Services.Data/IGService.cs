@@ -24,7 +24,9 @@
 
         public async Task<string> Login(string userId, string username, string password)
         {
-            this.instaApi = await this.api.Login(username, password);
+            this.instaApi = await this.api.Login(userId, username, password);
+
+            // challange needed (Two Factor Authentication)
             if (!this.instaApi.IsUserAuthenticated)
             {
                 var challenge = await this.instaApi.GetChallengeRequireVerifyMethodAsync();
@@ -32,34 +34,26 @@
             }
 
             // succsefull login
-            var user = new UserSessionData
-            {
-                UserName = username,
-                Password = password,
-            };
-            this.Add(userId, user);
+            var user = this.api.GetByName(username);
+            await this.Add(userId, user);
             return string.Empty;
         }
 
         public async Task<bool> TwoFactor(string username, string password, string code, string userId)
         {
-            this.instaApi = this.api.GetInstance(username);
+            this.instaApi = this.api.GetInstance(userId, username);
             await this.instaApi.VerifyCodeForChallengeRequireAsync(code);
             if (this.instaApi.IsUserAuthenticated)
             {
-                var user = new UserSessionData
-                {
-                    UserName = username,
-                    Password = password,
-                };
-                this.Add(userId, user);
+                var user = this.api.GetByName(username);
+                await this.Add(userId, user);
                 return true;
             }
 
             return false;
         }
 
-        private async void Add(string userId, UserSessionData user)
+        private async Task<string> Add(string userId, UserSessionData user)
         {
             var followersCount = await this.instaApi.UserProcessor.GetUserFollowersAsync(user.UserName, PaginationParameters.Empty);
             var followingCount = await this.instaApi.UserProcessor.GetUserFollowingAsync(user.UserName, PaginationParameters.Empty);
@@ -76,7 +70,8 @@
             var existingUser = this.igUsersRepository.All().Where(u => u.IGUserName == igUser.IGUserName).FirstOrDefault();
             if (existingUser != null)
             {
-                this.igUsersRepository.Update(igUser);
+                existingUser.UserId = igUser.UserId;
+                this.igUsersRepository.Update(existingUser);
             }
             else
             {
@@ -84,6 +79,8 @@
             }
 
             await this.igUsersRepository.SaveChangesAsync();
+
+            return igUser.Id;
         }
     }
 }

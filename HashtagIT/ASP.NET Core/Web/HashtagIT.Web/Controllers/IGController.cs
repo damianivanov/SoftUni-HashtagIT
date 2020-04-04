@@ -1,18 +1,15 @@
 ﻿namespace HashtagIT.Web.Controllers
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
     using System.Threading.Tasks;
 
     using HashtagIT.Data.Models;
     using HashtagIT.Services.Data;
     using HashtagIT.Web.ViewModels.IG;
-    using InstagramApiSharp.API;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
 
+    [Authorize]
     public class IGController : Controller
     {
         private readonly IIGService iGService;
@@ -26,14 +23,38 @@
             this.api = api;
         }
 
-        [Authorize]
-        public IActionResult IGIndex()
+        public IActionResult Login()
         {
             return this.View();
         }
 
-        [Authorize]
-        [HttpGet]
+        [HttpPost]
+        public async Task<IActionResult> Login(LoginViewModel viewModel, string guest, string login)
+        {
+            if (guest != null)
+            {
+                return this.RedirectToAction("GuestIndex");
+            }
+
+            if (!this.ModelState.IsValid)
+            {
+                return this.View(viewModel);
+            }
+
+            var user = await this.userManager.GetUserAsync(this.User);
+            var phone = await this.iGService.Login(user.Id, viewModel.IGUserName, viewModel.Password);
+            viewModel.Phone = phone;
+            string encryptedPassword = Cipher.Encrypt(viewModel.Password, viewModel.IGUserName);
+            viewModel.Password = encryptedPassword;
+            viewModel.UserId = user.Id;
+            if (phone != string.Empty)
+            {
+                return this.RedirectToAction("TwoFactor", viewModel);
+            }
+
+            return this.View("IGIndex");
+        }
+
         public IActionResult TwoFactor(LoginViewModel loginView, bool post = false)
         {
             return this.View(loginView);
@@ -52,32 +73,21 @@
             return this.RedirectToAction("IGIndex");
         }
 
-        [Authorize]
-        public IActionResult Login()
+        public async Task<IActionResult> IGIndex()
         {
+            var user = await this.userManager.GetUserAsync(this.User);
+            var userId = user.Id;
+            if (this.api.GetInstance(userId) == null)
+            {
+                return this.RedirectToAction("Login");
+            }
+
             return this.View();
         }
 
-        [HttpPost]
-        public async Task<IActionResult> Login(LoginViewModel viewModel)
+        public IActionResult GuestIndex()
         {
-            if (!this.ModelState.IsValid)
-            {
-                return this.View(viewModel);
-            }
-
-            var user = await this.userManager.GetUserAsync(this.User);
-            var phone = await this.iGService.Login(user.Id, viewModel.IGUserName, viewModel.Password);
-            viewModel.Phone = phone;
-            string encryptedPassword = Cipher.Encrypt(viewModel.Password, viewModel.IGUserName);
-            viewModel.Password = encryptedPassword;
-            viewModel.UserId = user.Id;
-            if (phone != string.Empty)
-            {
-                return this.RedirectToAction("TwoFactor", viewModel);
-            }
-
-            return this.View("IGIndex");
+            return this.View();
         }
     }
 }

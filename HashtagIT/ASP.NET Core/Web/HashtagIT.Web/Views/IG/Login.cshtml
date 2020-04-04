@@ -14,23 +14,28 @@
                 <div class="card-body">
                     <h1 style="font-family:'Grand Hotel',cursive; text-align:center; font-size:60px">Instagram</h1>
                 </div>
+
                 <form class="col-12" asp-action="Login" method="post">
                     <div class="container-sm">
-                        <input class="form-control" rows="1" asp-for="IGUserName" style="resize:none" placeholder="Username"/>
+                        <input class="form-control" rows="1" asp-for="IGUserName" style="resize:none" placeholder="Username" />
+
                     </div>
                     <br />
                     <div class="container-sm">
                         <input class="form-control" asp-for="Password" type="password" placeholder="Password" />
+
                     </div>
                     <br />
                     <div class="container-sm">
-                        <button class="btn btn-primary justify-content-center btn-block rounded" type="submit">Log in</button>
+                        <button class="btn btn-primary justify-content-center btn-block rounded" type="submit" value="login" name="login">Log in</button>
                     </div>
-                <hr class="text-muted"/>
-                <div class="row justify-content-center">
-                    <button class="btn btn-light border-dark" type="submit">Continue as a Guest</button>
-                </div>
+                    <hr class="text-muted" />
+                    <div class="row justify-content-center">
+                        <button class="btn btn-light border-dark" type="submit" value="guest" name="guest">Continue as a Guest</button>
+                    </div>
+
                 </form>
+
             </div>
         </div>
     </div>

@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
     using System.Text;
     using System.Threading.Tasks;
 
@@ -11,21 +12,32 @@
 
     public class API
     {
-        private static Dictionary<string, IInstaApi> instagrams;
+        private static Dictionary<string, Dictionary<string, IInstaApi>> instagrams;
         private static Dictionary<string, UserSessionData> users;
 
         public API()
         {
-            instagrams = new Dictionary<string, IInstaApi>();
+            instagrams = new Dictionary<string, Dictionary<string, IInstaApi>>();
             users = new Dictionary<string, UserSessionData>();
         }
 
-        public IInstaApi GetInstance(string username)
+        public IInstaApi GetInstance(string userId, string username = null)
         {
-            return instagrams[username];
+            if (username != null && instagrams.ContainsKey(userId))
+            {
+                return instagrams[userId][username];
+            }
+            else if (instagrams.ContainsKey(userId))
+            {
+                return instagrams[userId].FirstOrDefault().Value;
+            }
+            else
+            {
+                return null;
+            }
         }
 
-        public async Task<IInstaApi> Login(string username, string password)
+        public async Task<IInstaApi> Login(string userId, string username, string password)
         {
             var user = new UserSessionData
             {
@@ -48,7 +60,16 @@
                 }
             }
 
-            instagrams[username] = api;
+            if (instagrams.ContainsKey(userId))
+            {
+                instagrams[userId][username] = api;
+            }
+            else
+            {
+                instagrams[userId] = new Dictionary<string, IInstaApi>();
+                instagrams[userId][username] = api;
+            }
+
             return api;
         }
 

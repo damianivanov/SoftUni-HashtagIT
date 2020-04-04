@@ -1,5 +1,6 @@
 ﻿namespace HashtagIT.Services.Data
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
@@ -11,14 +12,36 @@
     public class HashtagSetsService : IHashtagSetsService
     {
         private readonly IDeletableEntityRepository<HashtagSet> hashtagsetsRepository;
+        private readonly IDeletableEntityRepository<Hashtag> hashtagRepository;
 
-        public HashtagSetsService(IDeletableEntityRepository<HashtagSet> hashtagsetsRepository)
+        public HashtagSetsService(IDeletableEntityRepository<HashtagSet> hashtagsetsRepository, IDeletableEntityRepository<Hashtag> hashtagRepository)
         {
             this.hashtagsetsRepository = hashtagsetsRepository;
+            this.hashtagRepository = hashtagRepository;
         }
 
         public async Task<int> CreateAsync(string text, string userId, int categoryId, bool isPrivate)
         {
+            List<string> hashtags = text.Split(new char[] { '#', '\r', '\n', ' ' }, StringSplitOptions.RemoveEmptyEntries).ToList();
+            for (int i = 0; i < hashtags.Count; i++)
+            {
+                var hashtag = this.hashtagRepository.All().FirstOrDefault(h => h.Name == hashtags[i]);
+                if (hashtag != null)
+                {
+                    hashtag.PostCount++;
+                    this.hashtagRepository.Update(hashtag);
+                }
+                else
+                {
+                    hashtag = new Hashtag
+                    {
+                        Name = hashtags[i],
+                        PostCount = 1,
+                    };
+                    await this.hashtagRepository.AddAsync(hashtag);
+                }
+            }
+
             var hashtagSet = new HashtagSet
             {
                 Text = text,
@@ -26,8 +49,10 @@
                 UserId = userId,
                 CategoryId = categoryId,
             };
+
             await this.hashtagsetsRepository.AddAsync(hashtagSet);
             await this.hashtagsetsRepository.SaveChangesAsync();
+
             return hashtagSet.Id;
         }
 
