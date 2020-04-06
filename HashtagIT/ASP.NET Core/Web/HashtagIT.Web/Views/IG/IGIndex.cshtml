@@ -2,5 +2,8 @@
     Layout = "~/Views/Shared/_NavBar.cshtml";
 }
 <div class="container">
-    
+    <form method="post" asp-controller="IG" asp-action="TopNine">
+        <input name="username" class="input-group" placeholder="username"/>
+        <button type="submit">TOP NINE</button>
+    </form>
 </div>

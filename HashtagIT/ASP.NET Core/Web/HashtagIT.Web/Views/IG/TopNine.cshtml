@@ -1,0 +1,91 @@
+﻿@model HashtagIT.Web.ViewModels.IG.TopNineViewModel
+@{
+    ViewData["Title"] = "TopNine";
+    Layout = "~/Views/Shared/_NavBar.cshtml";
+
+}
+
+    <div class="container">
+        <div class="container">
+            <div class="profile">
+                <div class="profile-image">
+                    <img src="@Model.ProfilePicUrl" alt="">
+                </div>
+
+                <div class="">
+                    <h4 class="font-weight-light">@Model.IGUserName</h4>
+                </div>
+
+                <div class="profile-stats">
+                    <ul class="p-0">
+                        <li>
+                            <span class="profile-stat-count">@Model.AllPosts</span> posts
+                        </li>
+                        <li>
+                            <span class="profile-stat-count">
+                                @Model.Followers
+                            </span> followers
+                        </li>
+                        <li><span class="profile-stat-count">@Model.Following</span> following</li>
+                    </ul>
+
+                </div>
+
+                <div class="profile-bio">
+
+                    <p>
+                        <span class="profile-real-name">@Model.IGFullName</span>
+                        <h4 style="font-size:13px; margin-top:5px;">
+                            @Model.Caption
+                        </h4>
+
+                    </p>
+
+                </div>
+
+            </div>
+        </div>
+
+        <div class="container text-center row">
+            <div class="col-4">Post: @Model.AllPosts</div>
+            <div class="col-4">Average Likes: @Model.LikesAvrg</div>
+            <div class="col-4">Likes: @Model.ThisYearsPostsCount</div>
+
+        </div>
+
+        <div class="container">
+            <div class="gallery">
+                @foreach (var post in Model.Posts)
+                {
+                    <div class="gallery-item" tabindex="0">
+                        <img src=@post.PostPhoto class="gallery-image" id="@post.PostUrl">
+                        <div class="gallery-item-info">
+                            <ul>
+                                <li class="gallery-item-likes"><span class="visually-hidden">Likes:</span><i class="fas fa-heart" aria-hidden="true"></i>@post.Likes</li>
+                                <li class="gallery-item-comments"><span class="visually-hidden">Comments:</span><i class="fas fa-comment" aria-hidden="true"></i>@post.Comments</li>
+                            </ul>
+
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+
+@section Scripts
+{
+    <script>
+         const posts = document.querySelectorAll('.gallery-item');
+         posts.forEach(post => {
+          post.addEventListener('click', () => {
+              const imgUrl = post.firstElementChild.id.split("?")[0];
+              window.open(imgUrl, '_blank');
+          });
+         });
+    </script>
+}
+
+
+
+
+

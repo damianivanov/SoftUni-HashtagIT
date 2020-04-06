@@ -23,7 +23,7 @@
 
         public IInstaApi GetInstance(string userId, string username = null)
         {
-            if (username != null && instagrams.ContainsKey(userId))
+            if (username != null && instagrams.ContainsKey(userId) && instagrams[userId].ContainsKey(username))
             {
                 return instagrams[userId][username];
             }
@@ -66,8 +66,12 @@
             }
             else
             {
-                instagrams[userId] = new Dictionary<string, IInstaApi>();
-                instagrams[userId][username] = api;
+                // instagrams[userId] = new Dictionary<string, IInstaApi>();
+                // instagrams[userId][username] = api;
+                instagrams[userId] = new Dictionary<string, IInstaApi>
+                {
+                    [username] = api,
+                };
             }
 
             return api;

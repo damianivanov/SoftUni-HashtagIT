@@ -10,11 +10,17 @@
 
     public class Post : BaseDeletableModel<int>
     {
-        public int HashtagSetId { get; set; }
+        public string IGUserName { get; set; }
 
-        public virtual HashtagSet HashtagSet { get; set; }
+        public string HashtagSet { get; set; }
 
         public string PostUrl { get; set; }
+
+        public string PostPhoto { get; set; }
+
+        public long Likes { get; set; }
+
+        public string Comments { get; set; }
 
         [NotMapped]
         public InstaMedia InstaMedia { get; set; }

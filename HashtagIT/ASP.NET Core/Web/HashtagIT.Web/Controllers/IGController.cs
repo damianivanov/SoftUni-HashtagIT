@@ -29,7 +29,7 @@
         }
 
         [HttpPost]
-        public async Task<IActionResult> Login(LoginViewModel viewModel, string guest, string login)
+        public async Task<IActionResult> Login(LoginViewModel viewModel, string guest)
         {
             if (guest != null)
             {
@@ -52,7 +52,7 @@
                 return this.RedirectToAction("TwoFactor", viewModel);
             }
 
-            return this.View("IGIndex");
+            return this.RedirectToAction("IGIndex");
         }
 
         public IActionResult TwoFactor(LoginViewModel loginView, bool post = false)
@@ -88,6 +88,14 @@
         public IActionResult GuestIndex()
         {
             return this.View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> TopNine(string username)
+        {
+            var userId = this.userManager.GetUserId(this.User);
+            var viewModel = await this.iGService.TopNine(userId, username);
+            return this.View(viewModel);
         }
     }
 }
