@@ -91,10 +91,15 @@
         }
 
         [HttpPost]
-        public async Task<IActionResult> TopNine(string username)
+        public IActionResult TopNine(string username)
+        {
+            return this.RedirectToAction(nameof(this.TopNineResult), new { username });
+        }
+
+        public async Task<IActionResult> TopNineResult(string username)
         {
             var userId = this.userManager.GetUserId(this.User);
-            var viewModel = await this.iGService.TopNine(userId, username);
+            TopNineViewModel viewModel = await this.iGService.TopNine(userId, username);
             return this.View(viewModel);
         }
     }

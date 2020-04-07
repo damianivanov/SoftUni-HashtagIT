@@ -28,7 +28,7 @@
                     
                         <i class="fas fa-user" style="color: #fed136"></i>
                         <label class="font-weight-bold">@hashtagSet.UserUserName</label>
-                        <a class="btn btn-outline-warning align-right" href="#" onclick="Random(@hashtagSet.Id)">RANDOMIZE</a>
+                        <a class="btn btn-outline-warning align-right" href="#" onclick="Random(@hashtagSet.Id); return false">RANDOMIZE</a>
                     <div class="row px-3 py-1">
                         <form id="randomizeForm" method="post">
                             <article class="text-dark bg-light mb-3" id="@hashtagSet.Id">@hashtagSet.Text</article>
@@ -44,7 +44,7 @@
                             </p>
                             <div class="col align-content-lg-end">
                                 <form id="voteForm" method="post">
-                                    <a href="#" onclick="Vote(@hashtagSet.Id)">
+                                    <a href="#" onclick="Vote(@hashtagSet.Id); return false">
                                         <i class="far fa-star"></i>
                                     </a>
                                     <label class="@hashtagSet.Id">@hashtagSet.VotesCount</label>

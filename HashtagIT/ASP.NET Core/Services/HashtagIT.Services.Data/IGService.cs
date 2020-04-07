@@ -51,7 +51,7 @@
         {
             this.instaApi = this.api.GetInstance(userId, username);
             var user = await this.instaApi.UserProcessor.GetUserInfoByUsernameAsync(username);
-            var allMedia = await this.instaApi.UserProcessor.GetUserMediaAsync(username, PaginationParameters.MaxPagesToLoad(5));
+            var allMedia = await this.instaApi.UserProcessor.GetUserMediaAsync(username, PaginationParameters.Empty);
             var mediaFromThisYear = allMedia.Value
                 .Where(m => m.TakenAt.Year == DateTime.Now.Year)
                 .OrderByDescending(m => m.LikesCount)

@@ -24,7 +24,7 @@
 
         public Category Category { get; set; }
 
-        public List<string> Hashtags => this.Text.Split(new[] { ' ', '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries).ToList();
+        public List<string> Hashtags => this.Text.Split(new[] {' ', '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries).ToList();
 
         public int HashtagCount => this.Hashtags.Count;
 
