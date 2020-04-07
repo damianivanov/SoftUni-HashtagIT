@@ -3,7 +3,9 @@
 }
 <div class="container">
     <form method="post" asp-controller="IG" asp-action="TopNine">
-        <input name="username" class="input-group" placeholder="username"/>
-        <button type="submit">TOP NINE</button>
+        <span class="input-group-text" id="basic-addon1">@@
+        <input name="username" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1" required>
+        </span>
+        <button type="submit" class="btn btn-outline-dark">TOP NINE</button>
     </form>
 </div>

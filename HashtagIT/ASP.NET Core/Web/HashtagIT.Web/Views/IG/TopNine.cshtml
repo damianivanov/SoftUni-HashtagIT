@@ -5,83 +5,106 @@
 
 }
 
+<div class="container" style="max-width:960px">
     <div class="container">
-        <div class="container">
-            <div class="profile">
-                <div class="profile-image">
-                    <img src="@Model.ProfilePicUrl" alt="">
-                </div>
+        <div class="profile">
+            <div class="profile-image">
+                <img src="@Model.ProfilePicUrl" alt="">
+            </div>
 
-                <div class="">
-                    <h4 class="font-weight-light">@Model.IGUserName</h4>
-                </div>
+            <div class="">
+                <h4 class="font-weight-light">@Model.IGUserName</h4>
+            </div>
 
-                <div class="profile-stats">
-                    <ul class="p-0">
-                        <li>
-                            <span class="profile-stat-count">@Model.AllPosts</span> posts
-                        </li>
-                        <li>
-                            <span class="profile-stat-count">
-                                @Model.Followers
-                            </span> followers
-                        </li>
-                        <li><span class="profile-stat-count">@Model.Following</span> following</li>
-                    </ul>
-
-                </div>
-
-                <div class="profile-bio">
-
-                    <p>
-                        <span class="profile-real-name">@Model.IGFullName</span>
-                        <h4 style="font-size:13px; margin-top:5px;">
-                            @Model.Caption
-                        </h4>
-
-                    </p>
-
-                </div>
+            <div class="profile-stats">
+                <ul class="p-0">
+                    <li>
+                        <span class="profile-stat-count">@Model.AllPosts</span> posts
+                    </li>
+                    <li>
+                        <span class="profile-stat-count">
+                            @Model.Followers
+                        </span> followers
+                    </li>
+                    <li><span class="profile-stat-count">@Model.Following</span> following</li>
+                </ul>
 
             </div>
+
+            <div class="profile-bio">
+
+                <p>
+                    <span class="profile-real-name">@Model.IGFullName</span>
+                    <h4 style="font-size:13px; margin-top:5px;">
+                        @Model.Caption
+                    </h4>
+
+                </p>
+
+            </div>
+
         </div>
+    </div>
+    <div class="container text-sm-center row">
+        <div class="col-4">Post: <span class="topNine">@Model.ThisYearsPostsCount</span></div>
+        <div class="col-4">Average Likes: <span class="topNine">@Model.LikesAvrg</span></div>
+        <div class="col-4">Likes: <span class="topNine">@Model.LikesTotal</span></div>
 
-        <div class="container text-center row">
-            <div class="col-4">Post: @Model.AllPosts</div>
-            <div class="col-4">Average Likes: @Model.LikesAvrg</div>
-            <div class="col-4">Likes: @Model.ThisYearsPostsCount</div>
+    </div>
 
-        </div>
-
-        <div class="container">
-            <div class="gallery">
-                @foreach (var post in Model.Posts)
-                {
+    <div class="container">
+        @{
+            var posts = Model.Posts.ToArray();
+            for (int i = 0; i < 9; i += 3)
+            {
+                <div class="row d-flex justify-content-center my-2">
                     <div class="gallery-item" tabindex="0">
-                        <img src=@post.PostPhoto class="gallery-image" id="@post.PostUrl">
+                        <img src=@posts[i].PostPhoto class="gallery-image" id="@posts[i].PostUrl">
                         <div class="gallery-item-info">
                             <ul>
-                                <li class="gallery-item-likes"><span class="visually-hidden">Likes:</span><i class="fas fa-heart" aria-hidden="true"></i>@post.Likes</li>
-                                <li class="gallery-item-comments"><span class="visually-hidden">Comments:</span><i class="fas fa-comment" aria-hidden="true"></i>@post.Comments</li>
+                                <li class="gallery-item-likes"><span class="visually-hidden">Likes:</span><i class="fas fa-heart" aria-hidden="true"></i>@posts[i].Likes</li>
+                                <li class="gallery-item-comments"><span class="visually-hidden">Comments:</span><i class="fas fa-comment" aria-hidden="true"></i>@posts[i].Comments</li>
                             </ul>
 
                         </div>
                     </div>
-                }
-            </div>
-        </div>
+                    <div class="gallery-item" tabindex="0">
+                        <img src=@posts[i+1].PostPhoto class="gallery-image" id="@posts[i+1].PostUrl">
+                        <div class="gallery-item-info">
+                            <ul>
+                                <li class="gallery-item-likes"><span class="visually-hidden">Likes:</span><i class="fas fa-heart" aria-hidden="true"></i>@posts[i + 1].Likes</li>
+                                <li class="gallery-item-comments"><span class="visually-hidden">Comments:</span><i class="fas fa-comment" aria-hidden="true"></i>@posts[i + 1].Comments</li>
+                            </ul>
+
+                        </div>
+                    </div>
+                    <div class="gallery-item" tabindex="0">
+                        <img src=@posts[i+2].PostPhoto class="gallery-image" id="@posts[i+2].PostUrl">
+                        <div class="gallery-item-info">
+                            <ul>
+                                <li class="gallery-item-likes"><span class="visually-hidden">Likes:</span><i class="fas fa-heart" aria-hidden="true"></i>@posts[i + 2].Likes</li>
+                                <li class="gallery-item-comments"><span class="visually-hidden">Comments:</span><i class="fas fa-comment" aria-hidden="true"></i>@posts[i + 2].Comments</li>
+                            </ul>
+
+                        </div>
+                    </div>
+                </div>
+            }
+        }
     </div>
+</div>
+
 
 @section Scripts
 {
     <script>
-         const posts = document.querySelectorAll('.gallery-item');
-         posts.forEach(post => {
-          post.addEventListener('click', () => {
-              const imgUrl = post.firstElementChild.id.split("?")[0];
-              window.open(imgUrl, '_blank');
-          });
-         });
+        const posts = document.querySelectorAll('.gallery-item');
+        posts.forEach(post => {
+            post.addEventListener('click', () => {
+                const imgUrl = post.firstElementChild.id.split("?")[0];
+                window.open(imgUrl, '_blank');
+            });
+        });
     </script>
 }
 

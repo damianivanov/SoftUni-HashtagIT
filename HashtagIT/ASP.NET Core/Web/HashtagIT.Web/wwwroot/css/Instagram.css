@@ -16,6 +16,10 @@ Flexbox and floats are used as a fallback so that browsers which don't support g
     box-sizing: border-box;
 }
 
+.topNine {
+    font-size: 25px;
+    font-family: 'Kaushan Script';
+}
 body {
     font-family: "Open Sans", Arial, sans-serif;
     min-height: 100vh;
@@ -120,6 +124,7 @@ img {
     .profile-stats:first-child {
         margin-left: 0;
     }
+
     .profile-stats li {
         display: inline-block;
         font-size: 0.9rem;
@@ -157,6 +162,7 @@ img {
 .gallery-item {
     position: relative;
     color: #fff;
+    padding-right: 8px;
     cursor: pointer;
 }
 
@@ -166,6 +172,7 @@ img {
         justify-content: center;
         align-items: center;
         position: absolute;
+        margin-right: 0px;
         top: 0;
         width: 293px;
         height: 293px;
@@ -200,7 +207,7 @@ img {
 .gallery-image {
     width: 293px;
     height: 293px;
-    object-fit: cover;
+    margin-right:0px;
 }
 
 /* Loader */
@@ -327,7 +334,6 @@ Remove or comment-out the code block below to see how the browser will fall-back
     }
 
     .gallery {
-        
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(18rem, 0fr));
         grid-gap: 1rem;
