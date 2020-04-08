@@ -77,15 +77,23 @@
             await this.hashtagsetsRepository.SaveChangesAsync();
         }
 
-        public IEnumerable<T> GetPublic<T>()
+        public IEnumerable<T> GetPublic<T>(int? take = null, int skip = 0)
         {
             var hashtagSets = this.hashtagsetsRepository
                 .All()
-                .Where(h => h.IsPrivate == false)
-                .OrderByDescending(h => h.CreatedOn)
-                .To<T>()
-                .ToList();
-            return hashtagSets;
+                .Where(h => !h.IsPrivate)
+                .OrderByDescending(h => h.CreatedOn).Skip(skip);
+            if (take.HasValue)
+            {
+                hashtagSets = hashtagSets.Take(take.Value);
+            }
+
+            return hashtagSets.To<T>().ToList();
+        }
+
+        public int GetCountPublic()
+        {
+            return this.hashtagsetsRepository.All().Where(h => !h.IsPrivate).ToList().Count;
         }
     }
 }

@@ -16,6 +16,7 @@
     [Authorize]
     public class HashtagSetController : Controller
     {
+        private const int SetsPerPage = 5;
         private readonly IHashtagSetsService hashtagSetsService;
         private readonly UserManager<ApplicationUser> userManager;
         private readonly ICategoriesService categoriesService;
@@ -76,13 +77,22 @@
             return this.RedirectToAction("MySets");
         }
 
-        public IActionResult Public()
+        public IActionResult Public(int page = 1)
         {
-            var hashtagSets = this.hashtagSetsService.GetPublic<HashtagSetViewModel>();
+            var hashtagSets = this.hashtagSetsService.GetPublic<HashtagSetViewModel>(SetsPerPage, (page - 1) * SetsPerPage);
+            var allPublicPosts = this.hashtagSetsService.GetCountPublic();
             var viewModel = new AllPublicHashtagSetsViewModel
             {
+                PagesCount = (int)Math.Ceiling((double)allPublicPosts / SetsPerPage),
                 HashtagSets = hashtagSets,
             };
+            if (viewModel.PagesCount == 0)
+            {
+                viewModel.PagesCount = 1;
+            }
+
+            viewModel.CurrentPage = page;
+
             return this.View(viewModel);
         }
     }

@@ -3,16 +3,16 @@
     Layout = "~/Views/Shared/_NavBar.cshtml";
 }
 
-<div class="row justify-content-around">
+<nav class="row justify-content-around">
     <div class="align-left py-1">
         <a type="button" class="btn btn-outline-dark" href="/HashtagSet/MySets">My Set</a>
     </div>
     <div class="align-right py-1">
         <a type="submit" class="btn btn-outline-dark" href="/HashtagSet/Public">Public</a>
     </div>
-</div>
-<div class="container">
+</nav>
 
+<div class="container">
     <div style="text-align:center">
         <h1 style="font-family: 'Kaushan Script', 'Arial Narrow', Arial, sans-serif">Public Hashtag Sets</h1>
         <div class="ml-auto">
@@ -25,13 +25,21 @@
         {
             <div class="row justify-content-center">
                 <div class="rounded-right">
-                    
-                        <i class="fas fa-user" style="color: #fed136"></i>
-                        <label class="font-weight-bold">@hashtagSet.UserUserName</label>
-                        <a class="btn btn-outline-warning align-right" href="#" onclick="Random(@hashtagSet.Id); return false">RANDOMIZE</a>
+                    <i class="fas fa-user" style="color: #fed136"></i>
+                    <label class="font-weight-bold">@hashtagSet.UserUserName</label>
+                    <a class="btn btn-outline-warning align-right" href="#" onclick="Random(@hashtagSet.Id); return false">RANDOMIZE</a>
                     <div class="row px-3 py-1">
                         <form id="randomizeForm" method="post">
-                            <article class="text-dark bg-light mb-3" id="@hashtagSet.Id">@hashtagSet.Text</article>
+                            @if (hashtagSet.UserUserName == this.User.Identity.Name)
+                            {
+                                <a href="/HashtagSet/ById/@hashtagSet.Id">
+                                    <label class="text-dark bg-light mb-3" id="@hashtagSet.Id">@hashtagSet.Text</label>
+                                </a>
+                            }
+                            else
+                            {   
+                                <label class="text-dark bg-light mb-3" id="@hashtagSet.Id">@hashtagSet.Text</label>
+                            }
                         </form>
                         <div class="row px-3">
                             <p>
@@ -59,6 +67,44 @@
     </div>
 </div>
 
+<nav>
+    <ul class="pagination justify-content-center">
+        @if (Model.CurrentPage == 1)
+        {
+            <li class="page-item disabled">
+                <span class="page-link">Previous</span>
+            </li>
+
+        }
+        else
+        {
+            <li class="page-item">
+                <a class="page-link"
+                   asp-route-page="@(this.Model.CurrentPage - 1)">Previous</a>
+            </li>
+        }
+        @for (int i = 1; i <= Model.PagesCount; i++)
+        {
+            var active = i == this.Model.CurrentPage ? "active" : string.Empty;
+            <li class="page-item @active">
+                <a class="page-link" asp-route-page="@i">@i</a>
+            </li>
+        }
+        @if (this.Model.CurrentPage == this.Model.PagesCount)
+        {
+            <li class="page-item disabled">
+                <a class="page-link" href="#">Next</a>
+            </li>
+        }
+        else
+        {
+            <li class="page-item">
+                <a class="page-link"                  
+                   asp-route-page="@(this.Model.CurrentPage + 1)">Next</a>
+            </li>
+        }       
+    </ul>
+</nav>
 
 @section Scripts{
 

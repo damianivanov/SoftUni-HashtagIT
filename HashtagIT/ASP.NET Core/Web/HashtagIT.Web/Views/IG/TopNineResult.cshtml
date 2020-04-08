@@ -55,7 +55,7 @@
     <div class="container">
         @{
             var posts = Model.Posts.ToArray();
-            for (int i = 0; i < 9; i += 3)
+            for (int i = 0; i < posts.Length; i += 3)
             {
                 <div class="row d-flex justify-content-center my-2">
                     <div class="gallery-item" tabindex="0">

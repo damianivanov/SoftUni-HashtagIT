@@ -1,5 +1,6 @@
 ﻿namespace HashtagIT.Web.Controllers
 {
+    using System.Security.Claims;
     using System.Threading.Tasks;
 
     using HashtagIT.Data.Models;
@@ -33,7 +34,7 @@
         {
             if (guest != null)
             {
-                return this.RedirectToAction("GuestIndex");
+                return this.RedirectToAction(nameof(this.IGIndex));
             }
 
             if (!this.ModelState.IsValid)
@@ -49,10 +50,10 @@
             viewModel.UserId = user.Id;
             if (phone != string.Empty)
             {
-                return this.RedirectToAction("TwoFactor", viewModel);
+                return this.RedirectToAction(nameof(this.TwoFactor), viewModel);
             }
 
-            return this.RedirectToAction("IGIndex");
+            return this.RedirectToAction(nameof(this.IGIndex));
         }
 
         public IActionResult TwoFactor(LoginViewModel loginView, bool post = false)
@@ -67,10 +68,10 @@
 
             if (!result)
             {
-                this.RedirectToAction("Login");
+                this.RedirectToAction(nameof(this.Login));
             }
 
-            return this.RedirectToAction("IGIndex");
+            return this.RedirectToAction(nameof(this.IGIndex));
         }
 
         public async Task<IActionResult> IGIndex()
@@ -79,14 +80,9 @@
             var userId = user.Id;
             if (this.api.GetInstance(userId) == null)
             {
-                return this.RedirectToAction("Login");
+                return this.RedirectToAction(nameof(this.Login));
             }
 
-            return this.View();
-        }
-
-        public IActionResult GuestIndex()
-        {
             return this.View();
         }
 

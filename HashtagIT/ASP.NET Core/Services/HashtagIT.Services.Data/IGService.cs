@@ -83,6 +83,16 @@
                 posts.Add(postModel);
             }
 
+            double likesAvrg;
+            if (likesTotal != 0 && mediaFromThisYear.Count != 0)
+            {
+                likesAvrg = mediaFromThisYear.Average(x => x.LikesCount);
+            }
+            else
+            {
+                likesAvrg = 0;
+            }
+
             var viewModel = new TopNineViewModel
             {
                 IsPrivate = user.Value.IsPrivate,
@@ -95,7 +105,7 @@
                 IGUserName = user.Value.Username,
                 LikesTotal = likesTotal,
                 ThisYearsPostsCount = mediaFromThisYear.Count,
-                LikesAvrg = likesTotal / mediaFromThisYear.Count,
+                LikesAvrg = likesAvrg,
                 Posts = posts,
             };
 

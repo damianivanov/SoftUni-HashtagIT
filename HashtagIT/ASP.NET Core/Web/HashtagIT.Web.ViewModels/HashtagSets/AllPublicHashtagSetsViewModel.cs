@@ -9,6 +9,10 @@
 
     public class AllPublicHashtagSetsViewModel : IMapFrom<HashtagSet>, IMapTo<HashtagSet>
     {
+        public int CurrentPage { get; set; }
+
+        public int PagesCount { get; set; }
+
         public IEnumerable<HashtagSetViewModel> HashtagSets { get; set; }
     }
 }
