@@ -20,6 +20,7 @@ Flexbox and floats are used as a fallback so that browsers which don't support g
     font-size: 25px;
     font-family: 'Kaushan Script';
 }
+
 body {
     font-family: "Open Sans", Arial, sans-serif;
     min-height: 100vh;
@@ -30,12 +31,6 @@ body {
 
 img {
     display: block;
-}
-
-.Container {
-    max-width: 93.5rem;
-    margin: 0 auto;
-    padding: 0 2rem;
 }
 
 .btn {

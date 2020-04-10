@@ -12,24 +12,93 @@
     </div>
 </div>
 
-    <div class="col" style="text-align:center">
-        <h1 style="font-family: 'Kaushan Script', 'Arial Narrow', Arial, sans-serif">My Hashtag Sets</h1>
-        <i class="fas fa-user" style="color: #fed136"></i>
-        <label style="font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif">@Model.UserName</label>
-        <div class="ml-auto">
-            <a href="/HashtagSet/Create" class="btn btn-primary">Create</a>
-        </div>
+<div class="col" style="text-align:center">
+    <h1 id="mineTitle">My Hashtag Sets</h1>
+    <i class="fas fa-user" style="color: #fed136"></i>
+    <label id="mineUserName">@Model.UserName</label>
+    <div class="ml-auto">
+        <a href="/HashtagSet/Create" class="btn btn-primary">Create</a>
     </div>
+</div>
 
-    <br />
-    <div class="container">
-        @foreach (var hashtagSet in @Model.HashtagSets)
-        {
-            <div class="row px-3 form-group">
-                <a href="/HashtagSet/ById/@hashtagSet.Id">
-                    <label class="text-dark bg-light">@hashtagSet.Text</label>
-                </a>
+<br />
+
+<div class="container">
+    @foreach (var hashtagSet in @Model.HashtagSets)
+    {
+        <div class="row justify-content-start">
+            <div class="rounded-right">
+                <a class="btn btn-outline-warning align-right my-2" href="#" onclick="Random(@hashtagSet.Id); return false">RANDOMIZE</a>
+                <div class="row px-3 py-1">
+                    <form id="randomizeForm" method="post">
+                        <a href="/HashtagSet/ById/@hashtagSet.Id">
+                            <label style="cursor:pointer" class="text-dark bg-light" id="@hashtagSet.Id">@hashtagSet.Text</label>
+                        </a>
+                    </form>
+                </div>
             </div>
-            <hr />
+        </div>
+
+        <hr />
+    }
+</div>
+
+<!--Pagination-->
+<nav>
+    <ul class="pagination justify-content-center">
+        @if (Model.CurrentPage == 1)
+        {
+            <li class="page-item disabled">
+                <span class="page-link">Previous</span>
+            </li>
+
         }
-    </div>
+        else
+        {
+            <li class="page-item">
+                <a class="page-link"
+                   asp-route-page="@(this.Model.CurrentPage - 1)">Previous</a>
+            </li>
+        }
+        @for (int i = 1; i <= Model.PagesCount; i++)
+        {
+            var active = i == this.Model.CurrentPage ? "active" : string.Empty;
+            <li class="page-item @active">
+                <a class="page-link" asp-route-page="@i">@i</a>
+            </li>
+        }
+        @if (this.Model.CurrentPage == this.Model.PagesCount)
+        {
+            <li class="page-item disabled">
+                <a class="page-link" href="#">Next</a>
+            </li>
+        }
+        else
+        {
+            <li class="page-item">
+                <a class="page-link"
+                   asp-route-page="@(this.Model.CurrentPage + 1)">Next</a>
+            </li>
+        }
+    </ul>
+</nav>
+
+@section Scripts{
+    <script>
+        function Random(hashtags) {
+            var token = $('#randomizeForm input[name=__RequestVerificationToken]').val();
+            var json = hashtags;
+            $.ajax({
+                url: "/api/randomize",
+                type: "POST",
+                data: JSON.stringify(json),
+                contentType: "application/json charset=utf-8",
+                headers: { 'X-CSRF-TOKEN': token },
+                dataType: "json",
+                success: function (data) {
+                    $("#" + json).text(data.text);
+                }
+            });
+        }
+    </script>
+}

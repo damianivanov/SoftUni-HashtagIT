@@ -21,7 +21,17 @@ a:hover {
   color: #fec503;
 }
 
-
+#mineTitle {
+    font-size: 40px;
+    font-family: 'Kaushan Script', 'Arial Narrow', Arial, sans-serif;
+    text-align: center;
+    margin: 0px 0px 8px;
+}
+#mineUserName {
+    margin: 0px 0px 8px;
+    font-size: 16px;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
 .text-primary {
   color: #fed136 !important;
 }

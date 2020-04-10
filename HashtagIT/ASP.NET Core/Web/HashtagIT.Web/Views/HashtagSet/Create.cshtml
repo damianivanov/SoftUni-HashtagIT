@@ -2,38 +2,50 @@
 @{
     this.ViewData["Title"] = "Create Hashtag Set";
     Layout = "~/Views/Shared/_NavBar.cshtml";
- }
+}
 
 <div class="container">
 
-<div>   
-    <br />
-    <h1 style="text-align:center;font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif">@this.ViewData["Title"]</h1>   
-</div>
-
-<form method="post" asp-action="Create">
     <div>
-        <i class="fas fa-hashtag"></i>
-        <label>Hashtag Set</label>
-        <textarea class="form-control" rows="6" asp-for="Text" style="resize:none"></textarea>
-        <span asp-validation-for="Text" class="text-danger"></span>
+        <br />
+        <h1 id="mineTitle">@this.ViewData["Title"]</h1>
     </div>
 
-    <br />    
-    <div>
-        <i class="fas fa-list"></i>
-        <label>Category</label>
-        <select class="form-control" asp-for="CategoryId" asp-items="Model.Categories.Select(c=> new SelectListItem(c.Name,c.Id.ToString()))"></select>
-    </div>
+    @if (this.User.IsInRole("Administrator"))
+    {
+        <div class="row">
+            <a class="btn ml-auto btn-danger" href="/Categories/Add">Add Category</a>
+        </div>
+    }
 
-    <br />
-    <div>
-        <i class="fas fa-user-lock"></i>
-        <label>Private</label>
-        <input type="checkbox" asp-for="IsPrivate" />
-    </div>
 
-    <hr/>
-    <input type="submit" class="btn btn-primary" value="Add Set">
-</form>
+    <form method="post" asp-action="Create">
+        <div>
+            <i class="fas fa-hashtag"></i>
+            <label>Hashtag Set</label>
+            <textarea class="form-control" rows="6" asp-for="Text" style="resize:none"></textarea>
+            <span asp-validation-for="Text" class="text-danger"></span>
+        </div>
+
+        <br />
+
+        <div>
+            <i class="fas fa-list"></i>
+            <label>Category</label>
+            <select class="form-control" asp-for="CategoryId" asp-items="Model.Categories.Select(c=> new SelectListItem(c.Name,c.Id.ToString()))">
+            </select>
+        </div>
+
+        <br />
+
+        <div>
+            <i class="fas fa-user-lock"></i>
+            <label>Private</label>
+            <input type="checkbox" asp-for="IsPrivate" />
+        </div>
+
+        <hr />
+
+        <input type="submit" class="btn btn-primary" value="Add Set"/>
+    </form>
 </div>

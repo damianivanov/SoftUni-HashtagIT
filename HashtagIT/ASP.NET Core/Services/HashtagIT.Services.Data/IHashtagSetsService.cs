@@ -12,12 +12,14 @@
 
         T GetById<T>(int id);
 
-        IEnumerable<T> GetAll<T>(string id);
+        IEnumerable<T> GetAllByUser<T>(string id, int? take = null, int skip = 0);
 
-        Task DeleteById(int id, string userId);
+        Task DeleteByIdAsync(int id, string userId, bool isAdmin = false);
 
         IEnumerable<T> GetPublic<T>(int? take = null, int skip = 0);
 
         int GetCountPublic();
+
+        int GetCountPrivate(string userId);
     }
 }

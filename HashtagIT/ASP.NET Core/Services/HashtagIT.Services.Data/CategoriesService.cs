@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Threading.Tasks;
 
     using HashtagIT.Data.Common.Repositories;
     using HashtagIT.Data.Models;
@@ -15,6 +16,22 @@
         public CategoriesService(IDeletableEntityRepository<Category> categoriesRepository)
         {
             this.categoriesRepository = categoriesRepository;
+        }
+
+        public async Task<int> AddCategory(string name)
+        {
+            if (!this.categoriesRepository.All().Any(x => x.Name == name))
+            {
+                var category = new Category
+                {
+                    Name = name,
+                };
+                await this.categoriesRepository.AddAsync(category);
+                await this.categoriesRepository.SaveChangesAsync();
+                return category.Id;
+            }
+
+            return this.categoriesRepository.All().FirstOrDefault(x => x.Name == name).Id;
         }
 
         public IEnumerable<T> GetAll<T>(int? count = null)

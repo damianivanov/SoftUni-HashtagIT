@@ -5,6 +5,7 @@
     using System.Linq;
     using System.Threading.Tasks;
 
+    using HashtagIT.Common;
     using HashtagIT.Data.Common.Repositories;
     using HashtagIT.Data.Models;
     using HashtagIT.Services.Data;
@@ -57,24 +58,40 @@
             return this.View(hashtagViewModel);
         }
 
-        public async Task<IActionResult> MySets()
-        {
-            var user = await this.userManager.GetUserAsync(this.User);
-            var hashtagSets = this.hashtagSetsService.GetAll<HashtagSetViewModel>(user.Id);
-            var viewModel = new AllHashtagSetsByUserViewModel
-            {
-                HashtagSets = hashtagSets.OrderByDescending(h => h.CreatedOn).ToList(),
-                UserName = user.UserName,
-            };
-
-            return this.View(viewModel);
-        }
-
         public async Task<IActionResult> Delete(int id)
         {
-            var user = await this.userManager.GetUserAsync(this.User);
-            await this.hashtagSetsService.DeleteById(id, user.Id);
+            var userId = this.userManager.GetUserId(this.User);
+            if (this.User.IsInRole(GlobalConstants.AdministratorRoleName))
+            {
+                await this.hashtagSetsService.DeleteByIdAsync(id, userId, true);
+            }
+            else
+            {
+                await this.hashtagSetsService.DeleteByIdAsync(id, userId);
+            }
+
             return this.RedirectToAction("MySets");
+        }
+
+        public async Task<IActionResult> MySets(int page = 1)
+        {
+            var user = await this.userManager.GetUserAsync(this.User);
+            var hashtagSets = this.hashtagSetsService.GetAllByUser<HashtagSetViewModel>(user.Id, SetsPerPage, (page - 1) * SetsPerPage);
+            var allPrivatePosts = this.hashtagSetsService.GetCountPrivate(user.Id);
+            var viewModel = new AllHashtagSetsByUserViewModel
+            {
+                PagesCount = (int)Math.Ceiling((double)allPrivatePosts / SetsPerPage),
+                HashtagSets = hashtagSets,
+                UserName = user.UserName,
+            };
+            if (viewModel.PagesCount == 0)
+            {
+                viewModel.PagesCount = 1;
+            }
+
+            viewModel.CurrentPage = page;
+
+            return this.View(viewModel);
         }
 
         public IActionResult Public(int page = 1)

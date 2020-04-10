@@ -47,6 +47,7 @@
             return string.Empty;
         }
 
+        // TODO Refactor
         public async Task<TopNineViewModel> TopNine(string userId, string username)
         {
             this.instaApi = this.api.GetInstance(userId, username);

@@ -64,16 +64,34 @@
                     .FirstOrDefault();
         }
 
-        public IEnumerable<T> GetAll<T>(string id)
+        public IEnumerable<T> GetAllByUser<T>(string id, int? take = null, int skip = 0)
         {
-            return this.hashtagsetsRepository.All()
-                   .Where(h => h.UserId == id).To<T>().ToList();
+            var hashtagSets = this.hashtagsetsRepository
+                   .All()
+                   .OrderByDescending(h => h.CreatedOn)
+                   .Where(h => h.UserId == id)
+                   .Skip(skip);
+            if (take.HasValue)
+            {
+                hashtagSets = hashtagSets.Take(take.Value);
+            }
+
+            return hashtagSets.To<T>().ToList();
         }
 
-        public async Task DeleteById(int id, string userId)
+        public async Task DeleteByIdAsync(int id, string userId, bool isAdmin = false)
         {
-            var toRemove = this.hashtagsetsRepository.All().Where(h => h.Id == id && userId == h.UserId).FirstOrDefault();
-            this.hashtagsetsRepository.Delete(toRemove);
+            HashtagSet post;
+            if (isAdmin)
+            {
+                 post = this.hashtagsetsRepository.All().Where(h => h.Id == id).FirstOrDefault();
+            }
+            else
+            {
+                post = this.hashtagsetsRepository.All().Where(h => h.Id == id && h.UserId == userId).FirstOrDefault();
+            }
+
+            this.hashtagsetsRepository.Delete(post);
             await this.hashtagsetsRepository.SaveChangesAsync();
         }
 
@@ -82,7 +100,8 @@
             var hashtagSets = this.hashtagsetsRepository
                 .All()
                 .Where(h => !h.IsPrivate)
-                .OrderByDescending(h => h.CreatedOn).Skip(skip);
+                .OrderByDescending(h => h.CreatedOn)
+                .Skip(skip);
             if (take.HasValue)
             {
                 hashtagSets = hashtagSets.Take(take.Value);
@@ -94,6 +113,11 @@
         public int GetCountPublic()
         {
             return this.hashtagsetsRepository.All().Where(h => !h.IsPrivate).ToList().Count;
+        }
+
+        public int GetCountPrivate(string userId)
+        {
+            return this.hashtagsetsRepository.All().Where(h => h.UserId == userId).ToList().Count;
         }
     }
 }

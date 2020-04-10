@@ -2,6 +2,7 @@
 {
     using System.Collections.Generic;
     using System.Text;
+    using System.Threading.Tasks;
 
     using HashtagIT.Data.Models;
 
@@ -12,5 +13,7 @@
         T GetByName<T>(string name);
 
         Category GetById(int categoryId);
+
+        Task<int> AddCategory(string name);
     }
 }
