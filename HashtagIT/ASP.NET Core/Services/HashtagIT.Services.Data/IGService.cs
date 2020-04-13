@@ -32,6 +32,14 @@
 
         public async Task<string> Login(string userId, string username, string password)
         {
+            if (username == "system")
+            {
+                var guest = this.api.GetByName("softuni.project");
+                this.instaApi = await this.api.Login(userId, guest.UserName, guest.Password);
+                await this.Add(userId, guest);
+                return string.Empty;
+            }
+
             this.instaApi = await this.api.Login(userId, username, password);
 
             // challange needed (Two Factor Authentication)

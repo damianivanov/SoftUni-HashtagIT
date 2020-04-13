@@ -74,7 +74,7 @@
             services.AddTransient<IIGService, IGService>();
             services.AddTransient<IVotesService, VotesService>();
             services.AddTransient<IRandomizeService, RandomizeService>();
-            API api = new API();
+            API api = new API(this.configuration);
             services.AddSingleton(api);
         }
 

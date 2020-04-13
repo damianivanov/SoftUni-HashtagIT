@@ -32,8 +32,10 @@
         [HttpPost]
         public async Task<IActionResult> Login(LoginViewModel viewModel, string guest)
         {
+            var userId = this.userManager.GetUserId(this.User);
             if (guest != null)
             {
+                await this.iGService.Login(userId, "system", string.Empty);
                 return this.RedirectToAction(nameof(this.IGIndex));
             }
 
@@ -42,12 +44,13 @@
                 return this.View(viewModel);
             }
 
-            var user = await this.userManager.GetUserAsync(this.User);
-            var phone = await this.iGService.Login(user.Id, viewModel.IGUserName, viewModel.Password);
-            viewModel.Phone = phone;
+            var phone = await this.iGService.Login(userId, viewModel.IGUserName, viewModel.Password);
             string encryptedPassword = Cipher.Encrypt(viewModel.Password, viewModel.IGUserName);
+
+            viewModel.Phone = phone;
             viewModel.Password = encryptedPassword;
-            viewModel.UserId = user.Id;
+            viewModel.UserId = userId;
+
             if (phone != string.Empty)
             {
                 return this.RedirectToAction(nameof(this.TwoFactor), viewModel);
@@ -74,10 +77,9 @@
             return this.RedirectToAction(nameof(this.IGIndex));
         }
 
-        public async Task<IActionResult> IGIndex()
+        public IActionResult IGIndex()
         {
-            var user = await this.userManager.GetUserAsync(this.User);
-            var userId = user.Id;
+            var userId = this.userManager.GetUserId(this.User);
             if (this.api.GetInstance(userId) == null)
             {
                 return this.RedirectToAction(nameof(this.Login));

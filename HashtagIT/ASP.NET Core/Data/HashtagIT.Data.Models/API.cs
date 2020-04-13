@@ -9,16 +9,20 @@
     using InstagramApiSharp.API;
     using InstagramApiSharp.API.Builder;
     using InstagramApiSharp.Classes;
+    using Microsoft.Extensions.Configuration;
 
     public class API
     {
         private static Dictionary<string, Dictionary<string, IInstaApi>> instagrams;
         private static Dictionary<string, UserSessionData> users;
+        private readonly IConfiguration configuration;
 
-        public API()
+        public API(IConfiguration configuration)
         {
+            this.configuration = configuration;
             instagrams = new Dictionary<string, Dictionary<string, IInstaApi>>();
             users = new Dictionary<string, UserSessionData>();
+            _ = this.Login("system", this.configuration["Instagram:SystemUser"], this.configuration["Instagram:SystemPass"]).Result;
         }
 
         public IInstaApi GetInstance(string userId, string username = null)
