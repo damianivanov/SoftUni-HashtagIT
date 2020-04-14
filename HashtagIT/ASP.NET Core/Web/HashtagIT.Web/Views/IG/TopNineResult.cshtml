@@ -1,8 +1,6 @@
 ﻿@model HashtagIT.Web.ViewModels.IG.TopNineViewModel
 @{
     ViewData["Title"] = "TopNine";
-    Layout = "~/Views/Shared/_NavBar.cshtml";
-
 }
 
 <div class="container" style="max-width:960px">
@@ -47,7 +45,7 @@
     </div>
     <div class="container text-sm-center row">
         <div class="col-4">Post: <span class="topNine">@Model.ThisYearsPostsCount</span></div>
-        <div class="col-4">Average Likes: <span class="topNine">@Model.LikesAvrg</span></div>
+        <div class="col-4">Average Likes: <span class="topNine">@Convert.ToInt32(Model.LikesAvrg)</span></div>
         <div class="col-4">Likes: <span class="topNine">@Model.LikesTotal</span></div>
 
     </div>

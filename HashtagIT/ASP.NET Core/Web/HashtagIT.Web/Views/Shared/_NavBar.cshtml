@@ -5,7 +5,6 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@GlobalConstants.SystemName</title>
-    <link href="~/css/Instagram.css" rel="stylesheet" asp-append-version="true" />
     <link href="~/lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet" asp-append-version="true" />
     <link href="~/css/agency.css" rel="stylesheet" asp-append-version="true" />
     <link href="~/css/site.css" rel="stylesheet" asp-append-version="true" />
@@ -21,19 +20,19 @@
 
 </head>
 
-<body>
+<body id="page-top">
 
-    <nav class="navbar-expand-lg navbar-dark" id="mainNav" style="background-color:#212529">
-        <div class="container" style="">
-            <button class="navbar-toggler" type="button" data-target="#navbarResponsive">
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav">
+        <div class="container">
+            <a class="navbar-brand js-scroll-trigger" href="#page-top">@GlobalConstants.SystemName</a>
+            <button class="navbar-toggler navbar-toggler-right collapsed" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
                 Menu
                 <i class="fas fa-bars"></i>
             </button>
-            <div class="navbar-collapse collapse" style="">
-                <a class="navbar-brand" href="/">@GlobalConstants.SystemName</a>
+            <div class="navbar-collapse collapse" id="navbarResponsive" style="">
                 <ul class="navbar-nav text-uppercase ml-auto">
                     <li class="nav-item">
-                        <a class="nav-link js-scroll-trigger" href="/HashtagSet/MySets">Tools</a>
+                        <a class="nav-link js-scroll-trigger" href="#tools">Tools</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link js-scroll-trigger" href="#portfolio">Portfolio</a>
@@ -46,7 +45,9 @@
             </div>
         </div>
     </nav>
+
     @this.RenderBody()
+
     <footer class="footer">
         <div class="container">
             <div class="row align-items-center">
@@ -92,22 +93,20 @@
         </div>
     </footer>
 
+
     <environment names="Development">
         <script src="~/lib/jquery/dist/jquery.js" asp-append-version="true"></script>
         <script src="~/lib/jquery-validation/dist/jquery.validate.js" asp-append-version="true"></script>
         <script src="~/lib/jquery-validation-unobtrusive/dist/jquery.validate.unobtrusive.js" asp-append-version="true"></script>
         <script src="~/lib/bootstrap/dist/js/bootstrap.js" asp-append-version="true"></script>
-        <script src="~/js/agency-static.js" asp-append-version="true"></script>
-        <script src="~/lib/moment/min/moment-with-locales.min.js" asp-append-version="true"></script>
-        <script src="~/js/site.js" asp-append-version="true"></script>
+        <script src="~/js/agency.js" asp-append-version="true"></script>
     </environment>
     <environment names="Staging,Production">
         <script src="~/lib/jquery/dist/jquery.min.js" asp-append-version="true"></script>
         <script src="~/lib/jquery-validation/dist/jquery.validate.min.js" asp-append-version="true"></script>
         <script src="~/lib/jquery-validation-unobtrusive/dist/jquery.validate.unobtrusive.js" asp-append-version="true"></script>
         <script src="~/lib/bootstrap/dist/js/bootstrap.min.js" asp-append-version="true"></script>
-        <script src="~/js/agency-static.js" asp-append-version="true"></script>
-        <script src="~/lib/moment/min/moment-with-locales.min.js" asp-append-version="true"></script>
+        <script src="~/js/agency.min.js" asp-append-version="true"></script>
     </environment>
     @this.RenderSection("Scripts", required: false)
 </body>

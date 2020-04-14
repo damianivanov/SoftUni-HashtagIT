@@ -1,7 +1,7 @@
 ﻿@model HashtagIT.Web.ViewModels.HashtagSets.HashtagSetCreateInputModel
+@using HashtagIT.Common
 @{
     this.ViewData["Title"] = "Create Hashtag Set";
-    Layout = "~/Views/Shared/_NavBar.cshtml";
 }
 
 <div class="container">
@@ -11,7 +11,7 @@
         <h1 id="mineTitle">@this.ViewData["Title"]</h1>
     </div>
 
-    @if (this.User.IsInRole("Administrator"))
+    @if (this.User.IsInRole(GlobalConstants.AdministratorRoleName))
     {
         <div class="row">
             <a class="btn ml-auto btn-danger" href="/Categories/Add">Add Category</a>

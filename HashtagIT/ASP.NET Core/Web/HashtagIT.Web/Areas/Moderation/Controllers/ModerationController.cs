@@ -1,15 +1,14 @@
-﻿namespace HashtagIT.Web.Areas.Administration.Controllers
+﻿namespace HashtagIT.Web.Areas.Moderation.Controllers
 {
     using HashtagIT.Common;
-    using HashtagIT.Data.Models;
     using HashtagIT.Web.Controllers;
 
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
 
-    [Authorize(Roles = GlobalConstants.AdministratorRoleName)]
-    [Area("Administration")]
-    public class AdministrationController : BaseController
+    [Authorize(Roles = "Moderator")]
+    [Area("Moderation")]
+    public class ModerationController : BaseController
     {
         public IActionResult Index()
         {

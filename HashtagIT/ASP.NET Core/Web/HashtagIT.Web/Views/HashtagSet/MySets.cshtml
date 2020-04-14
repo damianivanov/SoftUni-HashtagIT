@@ -1,6 +1,6 @@
 ﻿@model HashtagIT.Web.ViewModels.HashtagSets.AllHashtagSetsByUserViewModel
 @{
-    Layout = "~/Views/Shared/_NavBar.cshtml";
+    this.Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <div class="row justify-content-around">
@@ -17,7 +17,7 @@
     <i class="fas fa-user" style="color: #fed136"></i>
     <label id="mineUserName">@Model.UserName</label>
     <div class="ml-auto">
-        <a href="/HashtagSet/Create" class="btn btn-primary">Create</a>
+        <a asp-action="Create" class="btn btn-primary">Create</a>
     </div>
 </div>
 
