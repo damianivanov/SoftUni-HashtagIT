@@ -27,7 +27,7 @@
                         <label>Public</label>
                     } |
                     <i class="far fa-clock"></i>
-                    <label class="font-italic">@Model.CreatedOn.ToString("f")</label> |
+                    <time datetime="@Model.CreatedOn.ToString("f")" class="font-italic"></time> |
                     <i class="fas fa-hashtag"></i>
                     <label class="text-danger">Hashtags: @Model.HashtagCount</label>
                     <div class="ml-auto">

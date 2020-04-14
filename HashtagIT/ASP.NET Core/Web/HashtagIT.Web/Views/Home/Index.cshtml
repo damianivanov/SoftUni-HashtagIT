@@ -4,6 +4,14 @@
     this.Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+@if (TempData["Message"]!=null)
+{
+
+    <div class="container-sm alert alert-success text-center" id="alert">
+        @TempData["Message"]
+    </div>
+}
+
 <header class="masthead img-fluid">
     <div class="container">
         <div class="intro-text">
@@ -40,10 +48,10 @@
             <!--Instagram-->
             <div class="col-md-4">
                 <span class="fa-stack fa-4x">
-                <a href="/IG/IGIndex">
-                    <i class="fas fa-circle fa-stack-2x text-primary"></i>
-                    <<i class="fab fa-instagram fa-stack-1x fa-inverse"></i>
-                </a>
+                    <a href="/IG/IGIndex">
+                        <i class="fas fa-circle fa-stack-2x text-primary"></i>
+                        <<i class="fab fa-instagram fa-stack-1x fa-inverse"></i>
+                    </a>
                 </span>
                 <h4 class="service-heading">Instagram Tools</h4>
                 <p class="text- muted">See your mutual followers, Top Nine posts and so much more.</p>
@@ -382,5 +390,14 @@
 <!-- Custom scripts for this template -->
 <script src="js/agency.min.js"></script>
 
+@section Scripts{
 
+    <script>
+        $(window).scroll(function () {
+            if ($(this).scrollTop() > 0) {
+                $('#alert').fadeOut();
+            }
+        });
+    </script>
+}
 

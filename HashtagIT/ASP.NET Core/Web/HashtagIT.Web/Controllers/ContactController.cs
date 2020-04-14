@@ -47,6 +47,7 @@
             await this.contactRepository.AddAsync(contactFormEntry);
             await this.contactRepository.SaveChangesAsync();
             await this.emailSender.SendEmailAsync(viewModel.Email, viewModel.FullName, GlobalConstants.SystemEmail, viewModel.Subject, viewModel.Content);
+            this.TempData.Add("Message", "Email Has Been Sent Successfully");
             return this.Redirect("/");
         }
     }

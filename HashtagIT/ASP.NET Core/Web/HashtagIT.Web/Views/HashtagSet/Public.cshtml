@@ -3,6 +3,7 @@
 @{
     Layout = "~/Views/Shared/_NavBar.cshtml";
 }
+ 
 
 <nav class="row justify-content-around">
     <div class="align-left py-1">
@@ -61,7 +62,7 @@
                     <i class="fas fa-list"></i>
                     <label>@hashtagSet.Category.Name</label> |
                     <i class="far fa-clock"></i>
-                    <label class="font-italic">@hashtagSet.CreatedOn.ToString("f")</label> |
+                    <time datetime="@hashtagSet.CreatedOn.ToString("f")" class="font-italic"></time> |
                     <i class="fas fa-hashtag"></i>
                     <label class="text-danger">Hashtags: @hashtagSet.HashtagCount</label> |
                 </p>
