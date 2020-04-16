@@ -2,29 +2,30 @@
     ViewData["Title"] = "Index";
 }
 
-<h1 class="text-center">Administration Page</h1>
-
+<h1 class="text-center">Moderator's Dashboard</h1>
 <div class="container p-1">
     <div class="card">
         <div class="card-header">
-            Roles
+            Categories
         </div>
         <div class="card-body">
             <h5 class="card-title">Add/Edit/Delete Categories</h5>
             <p class="card-text">Send an Email to the admin after making changes to the categories.</p>
-            <a asp-controller="ApplicationRoles" asp-action="Index" class="btn btn-primary">Roles</a>
+            <a asp-controller="Categories" asp-action="Index" class="btn btn-primary">Categories</a>
         </div>
     </div>
-    
-    <br />
 
+    <br/>  
+    
     <div class="card">
         <div class="card-header">
-            Make Moderator
+            Featured
         </div>
         <div class="card-body">
-            <h5 class="card-title">Promote to moderator.</h5>
-            <a asp-controller="ApplicationRoles" asp-action="MakeModerator" class="btn btn-primary">Make morator</a>
+            <h5 class="card-title">Special title treatment</h5>
+            <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+            <a href="#" class="btn btn-primary">Go somewhere</a>
         </div>
     </div>
 </div>
+

@@ -33,7 +33,8 @@
                     <div class="row px-3 py-1"> 
                         <form id="randomizeForm" method="post">
                             @if (hashtagSet.UserUserName == this.User.Identity.Name ||
-                            this.User.IsInRole(GlobalConstants.AdministratorRoleName))
+                                    this.User.IsInRole("Moderator") || 
+                                    this.User.IsInRole(GlobalConstants.AdministratorRoleName))
                             {
                                 <a href="/HashtagSet/ById/@hashtagSet.Id">
                                     <label style="cursor:pointer" class="text-dark bg-light mb-3" id="@hashtagSet.Id">@hashtagSet.Text</label>

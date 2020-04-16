@@ -92,17 +92,14 @@ namespace HashtagIT.Web.Areas.Administration.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id, [Bind("CreatedOn,ModifiedOn,IsDeleted,DeletedOn,Id,Name,NormalizedName,ConcurrencyStamp")] ApplicationRole applicationRole)
+        public async Task<IActionResult> Edit(string id, [Bind("Name")] ApplicationRole applicationRole)
         {
-            if (id != applicationRole.Id)
-            {
-                return NotFound();
-            }
-
             if (ModelState.IsValid)
             {
                 try
                 {
+                    var role = _context.Roles.FirstOrDefault(x => x.Id == id);
+                    role.Name = applicationRole.Name;
                     _context.Update(applicationRole);
                     await _context.SaveChangesAsync();
                 }
@@ -173,6 +170,7 @@ namespace HashtagIT.Web.Areas.Administration.Controllers
                 user.Roles.Add(identityRole);
                 _context.Users.Update(user);
                 await _context.SaveChangesAsync();
+                TempData["Promotion"] = "Succesfully promoted: " + user.UserName + " to moderator.";
                 return RedirectToAction(nameof(Index));
             }
             return View(UserName);

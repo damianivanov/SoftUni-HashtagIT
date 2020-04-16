@@ -1,13 +1,16 @@
 ﻿namespace HashtagIT.Web.Areas.Moderation.Controllers
 {
     using HashtagIT.Services.Data;
+    using HashtagIT.Web.Controllers;
     using HashtagIT.Web.ViewModels.Administration.Dashboard;
-
+    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
 
-    public class DashboardController : ModerationController
+    [Authorize(Roles = "Moderator")]
+    [Area("Moderation")]
+    public class DashboardController : BaseController
     {
-        public IActionResult IndexDashboard()
+        public IActionResult Index()
         {
             return this.View();
         }

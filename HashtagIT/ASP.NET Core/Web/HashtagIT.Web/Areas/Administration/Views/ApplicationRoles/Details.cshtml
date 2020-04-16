@@ -14,13 +14,13 @@
             @Html.DisplayNameFor(model => model.CreatedOn)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.CreatedOn)
+            <time datetime="@Model.CreatedOn.ToString("f")" class="font-italic"></time>
         </dd>
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.ModifiedOn)
         </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ModifiedOn)
+        <dd class="col-sm-10">
+            <time datetime="@Model.ModifiedOn.ToString()" class="font-italic"></time>
         </dd>
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.IsDeleted)
@@ -32,7 +32,7 @@
             @Html.DisplayNameFor(model => model.DeletedOn)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.DeletedOn)
+            <time datetime="@Model.DeletedOn.ToString()" class="font-italic"></time>
         </dd>
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.Name)

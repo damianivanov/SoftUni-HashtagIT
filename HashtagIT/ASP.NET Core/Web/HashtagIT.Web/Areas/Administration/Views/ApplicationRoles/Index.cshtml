@@ -3,7 +3,14 @@
     ViewData["Title"] = "Index";
 }
 
-<p>
+@if (this.TempData["Promotion"]!=null)
+{
+    <div class="container-sm alert alert-success text-center" id="alert">
+        @TempData["Promotion"]
+    </div>
+}
+
+<p class="pt-3">
     <a asp-action="Create" class="btn btn-primary">Create New</a>
 </p>
 
@@ -38,16 +45,16 @@
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.CreatedOn)
+                <time datetime="@item.CreatedOn.ToString("f")" class="font-italic"></time>
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.ModifiedOn)
+                <time datetime="@item.ModifiedOn.ToString()" class="font-italic"></time>
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.IsDeleted)
+                @Html.DisplayFor(modelitem=>item.IsDeleted)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.DeletedOn)
+                <time datetime="@item.DeletedOn.ToString()" class="font-italic"></time>
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Name)

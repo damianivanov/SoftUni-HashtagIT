@@ -2,13 +2,10 @@
 
 @{
     ViewData["Title"] = "Index";
-    Layout = "~/Views/Shared/_NavBar.cshtml";
 }
 
-<h1>Index</h1>
-
-<p>
-    <a asp-action="Create">Create New</a>
+<p class="pt-3">
+    <a asp-action="Create" class="btn btn-primary">Create New</a>
 </p>
 <table class="table">
     <thead>
@@ -47,13 +44,13 @@
                 @Html.DisplayFor(modelItem => item.IsDeleted)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.DeletedOn)
+                <time datetime="@item.DeletedOn.ToString()" class="font-italic"></time>
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.CreatedOn)
+                <time datetime="@item.CreatedOn.ToString("f")" class="font-italic"></time>
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.ModifiedOn)
+                <time datetime="@item.ModifiedOn.ToString()" class="font-italic"></time>
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |

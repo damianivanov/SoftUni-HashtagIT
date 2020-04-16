@@ -3,7 +3,7 @@
     ViewData["Title"] = "Create";
 }
 
-<h1>Create</h1>
+<h1>Promote to Moderator</h1>
 <hr />
 
 <div class="row">
@@ -11,7 +11,7 @@
         <form asp-action="MakeModerator">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="UserName" class="control-label"></label>
+                <label class="control-label">Username</label>
                 <input asp-for="UserName" class="form-control" />
                 <span asp-validation-for="UserName" class="text-danger"></span>
             </div>
