@@ -8,7 +8,7 @@
 
     [Authorize(Roles = "Moderator")]
     [Area("Moderation")]
-    public class DashboardController : BaseController
+    public class ModerationController : BaseController
     {
         public IActionResult Index()
         {
