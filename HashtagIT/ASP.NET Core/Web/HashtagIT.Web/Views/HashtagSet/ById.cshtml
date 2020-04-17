@@ -28,7 +28,8 @@
                     <i class="fas fa-hashtag"></i>
                     <label class="text-danger">Hashtags: @Model.HashtagCount</label>
                     <div class="ml-auto">
-                        <a href="/HashtagSet/Delete/@Model.Id" class="btn btn-danger">Delete</a>
+                        <a asp-controller="HashtagSet" asp-action="Delete" asp-route-id="@Model.Id" class="btn btn-danger">Delete</a>
+                        <a asp-controller="HashtagSet" asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-primary">Edit</a>
                     </div>
                 </p>
             </div>

@@ -56,6 +56,22 @@
             return hashtagSet.Id;
         }
 
+        public async Task<int> EditAsync(string text, int categoryId, bool isPrivate, int id)
+        {
+            var set = this.hashtagsetsRepository.All().FirstOrDefault(x => x.Id == id);
+            if (set == null)
+            {
+                return 0;
+            }
+
+            set.Text = text;
+            set.IsPrivate = isPrivate;
+            set.CategoryId = categoryId;
+            this.hashtagsetsRepository.Update(set);
+            await this.hashtagsetsRepository.SaveChangesAsync();
+            return id;
+        }
+
         public T GetById<T>(int id)
         {
             return this.hashtagsetsRepository.All()
@@ -118,6 +134,19 @@
         public int GetCountPrivate(string userId)
         {
             return this.hashtagsetsRepository.All().Where(h => h.UserId == userId).ToList().Count;
+        }
+
+        public bool IsOwner(int id, string userId)
+        {
+            var set = this.hashtagsetsRepository.All().FirstOrDefault(x => x.Id == id);
+            if (userId != string.Empty && set != null && set.UserId == userId)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
     }
 }

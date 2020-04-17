@@ -9,6 +9,7 @@
     using HashtagIT.Data.Common.Repositories;
     using HashtagIT.Data.Models;
     using HashtagIT.Services.Data;
+    using HashtagIT.Web.ViewModels;
     using HashtagIT.Web.ViewModels.HashtagSets;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Identity;
@@ -27,6 +28,11 @@
             this.hashtagSetsService = hashtagSetsService;
             this.userManager = userManager;
             this.categoriesService = categoriesService;
+        }
+
+        public IActionResult Index()
+        {
+            return this.RedirectToAction(nameof(this.MySets));
         }
 
         public IActionResult Create()
@@ -71,6 +77,38 @@
             }
 
             return this.RedirectToAction("MySets");
+        }
+
+        public IActionResult Edit(int? id)
+        {
+            if (id == null)
+            {
+                return this.View("Error");
+            }
+
+            var userId = this.userManager.GetUserId(this.User);
+            var viewModel = this.hashtagSetsService.GetById<HashtagSetCreateInputModel>(id.Value);
+            viewModel.Categories = this.categoriesService.GetAll<CategoryDropDownViewModel>();
+            if (id.HasValue && (this.hashtagSetsService.IsOwner(id.Value, userId) || this.User.IsInRole("Moderator")))
+            {
+                return this.View(viewModel);
+            }
+
+            return this.View("Error");
+
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(HashtagSetCreateInputModel viewModel)
+        {
+            if (this.ModelState.IsValid)
+            {
+                await this.hashtagSetsService.EditAsync(viewModel.Text, viewModel.CategoryId, viewModel.IsPrivate, viewModel.Id);
+                return this.RedirectToAction(nameof(this.ById), new { id = viewModel.Id });
+            }
+
+            return this.View(viewModel);
         }
 
         public async Task<IActionResult> MySets(int page = 1)

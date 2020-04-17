@@ -21,5 +21,9 @@
         int GetCountPublic();
 
         int GetCountPrivate(string userId);
+
+        Task<int> EditAsync(string text, int categoryId, bool isPrivate, int id);
+
+        bool IsOwner(int id, string userId);
     }
 }

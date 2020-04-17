@@ -1,52 +1,46 @@
 ﻿@model HashtagIT.Web.ViewModels.HashtagSets.HashtagSetCreateInputModel
-@using HashtagIT.Common
+
 @{
-    this.ViewData["Title"] = "Create Hashtag Set";
+    ViewData["Title"] = "Edit";
 }
+
+<h1 id="mineTitle">Edit</h1>
+
+<hr />
 
 <div class="container">
 
-    <div>
-        <br />
-        <h1 id="mineTitle">@this.ViewData["Title"]</h1>
-    </div>
-
-    @if (this.User.IsInRole(GlobalConstants.AdministratorRoleName) || this.User.IsInRole("Moderator"))
-    {
-        <div class="row">
-            <a class="btn ml-auto btn-danger" href="/Categories/Add">Add Category</a>
-        </div>
-    }
-
-
-    <form method="post" asp-action="Create">
+    <form asp-action="Edit">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
         <div>
-            <i class="fas fa-hashtag"></i>
-            <label>Hashtag Set</label>
+            <label class="control-label">Hashtags</label>
             <textarea class="form-control" rows="6" asp-for="Text" style="resize:none"></textarea>
             <span asp-validation-for="Text" class="text-danger"></span>
         </div>
 
-        <br />
-
-        <div>
+        <div class="form-group">
             <i class="fas fa-list"></i>
             <label>Category</label>
             <select class="form-control" asp-for="CategoryId" asp-items="Model.Categories.Select(c=> new SelectListItem(c.Name,c.Id.ToString()))">
             </select>
         </div>
 
-        <br />
-
-        <div>
+        <div class="form-group">
             <i class="fas fa-user-lock"></i>
             <label>Private</label>
             <input type="checkbox" asp-for="IsPrivate" />
         </div>
 
-        <hr />
+        <div class="form-group">
+            <input type="submit" value="Save" class="btn btn-primary" />
+        </div>
 
-        <input type="submit" class="btn btn-primary" value="Add Set"/>
     </form>
-
+    <div>
+        <a asp-action="MySets">Back to My Sets</a>
+    </div>
 </div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

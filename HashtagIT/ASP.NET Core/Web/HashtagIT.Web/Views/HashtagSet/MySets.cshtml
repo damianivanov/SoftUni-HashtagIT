@@ -44,6 +44,9 @@
 </div>
 
 <!--Pagination-->
+@if (Model.HashtagSets.Count()>0)
+{
+
 <nav>
     <ul class="pagination justify-content-center">
         @if (Model.CurrentPage == 1)
@@ -82,6 +85,7 @@
         }
     </ul>
 </nav>
+}
 
 @section Scripts{
     <script>

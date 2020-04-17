@@ -3,8 +3,13 @@
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
 
-    public class HashtagSetCreateInputModel
+    using HashtagIT.Data.Models;
+    using HashtagIT.Services.Mapping;
+
+    public class HashtagSetCreateInputModel : IMapFrom<HashtagSet>, IMapTo<HashtagSet>
     {
+        public int Id { get; set; }
+
         [Required]
         public string Text { get; set; }
 
