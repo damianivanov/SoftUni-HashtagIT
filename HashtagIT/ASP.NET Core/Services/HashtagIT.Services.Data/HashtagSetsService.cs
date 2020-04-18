@@ -95,18 +95,9 @@
             return hashtagSets.To<T>().ToList();
         }
 
-        public async Task DeleteByIdAsync(int id, string userId, bool isAdmin = false)
+        public async Task DeleteByIdAsync(int id, string userId)
         {
-            HashtagSet post;
-            if (isAdmin)
-            {
-                 post = this.hashtagsetsRepository.All().Where(h => h.Id == id).FirstOrDefault();
-            }
-            else
-            {
-                post = this.hashtagsetsRepository.All().Where(h => h.Id == id && h.UserId == userId).FirstOrDefault();
-            }
-
+            HashtagSet post = this.hashtagsetsRepository.All().Where(h => h.Id == id).FirstOrDefault();
             this.hashtagsetsRepository.Delete(post);
             await this.hashtagsetsRepository.SaveChangesAsync();
         }

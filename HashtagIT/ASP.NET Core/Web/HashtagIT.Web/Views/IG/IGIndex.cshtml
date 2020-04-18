@@ -1,9 +1,74 @@
 ﻿
-<div class="container">
-    <form method="post" asp-controller="IG" asp-action="TopNine">
-        <span class="input-group-text" id="basic-addon1">@@
-        <input name="username" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1" required>
-        </span>
-        <button type="submit" class="btn btn-outline-dark">TOP NINE</button>
-    </form>
-</div>
+    <div class="container">
+        <div id="cards" class="row justify-content-between">
+        <div class="col-md-4 p-3">
+            <div class="card mb-4 text-white bg-dark">
+                <img class="card-img-top" src="~/img/topNine.jpg" style="width:336px; height:224px; object-fit:fill; " alt="Card image cap">
+                <div class="card-body">
+                    <h5 class="card-title">Top Nine Posts</h5>
+                    <p class="card-text">See your best 9 post.</p>
+                    <form id="form2" method="post" asp-controller="IG" asp-action="TopNine">
+                        <span class="input-group-text" id="basic-addon1">
+                            @@
+                            <input name="username" class="ml-1 form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1" required>
+                        </span>
+                        <button type="submit" class="mt-2 btn btn-outline-light" onclick="Loading()">GENERATE</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4 p-3">
+            <div class="card mb-4 text-white bg-dark">
+                <img class="card-img-top" src="~/img/instagram.jpg" alt="Card image cap">
+                <div class="card-body">
+                    <h5 class="card-title">Not Following You</h5>
+                    <p class="card-text">See who is not following you back.</p>
+                    <form id="form2" method="post" asp-controller="IG" asp-action="NotFollowingPost">
+                        <span class="input-group-text" id="basic-addon1">
+                            @@
+                            <input name="username" class="ml-1 form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1" required>
+                        </span>
+                        <button type="submit" class="mt-2 btn btn-outline-light" onclick="Loading()">CHECK</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+        <div id="message" class="text-center p-4" hidden>
+            <h6>
+                This can take up to several minutes.
+            </h6>
+        </div>
+        <div id="loader" hidden>
+            <div class="lds-roller custom-center">
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
+        </div>
+
+    </div>
+
+@section Scripts{ 
+
+    <script>
+        function Loading() {
+            var form = document.getElementById("cards");
+            form.hidden = true;
+
+            var loader = document.getElementById("loader");
+            loader.hidden = false;  
+
+            var text = document.getElementById("message");
+            text.hidden = false;
+        }
+    </script>
+
+}

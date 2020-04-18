@@ -11,5 +11,7 @@
         Task<bool> TwoFactor(string username, string password, string code, string userId);
 
         Task<TopNineViewModel> TopNine(string userId, string username);
+
+        Task<NotFollowingViewModel> NotFollowinBack(string userId, string username);
     }
 }

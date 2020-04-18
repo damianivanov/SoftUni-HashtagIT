@@ -124,8 +124,7 @@ img {
         display: inline-block;
         font-size: 0.9rem;
         line-height: 1.5;
-        margin-right: 4rem;
-        cursor: pointer;
+        margin-right: 4rem; 
     }
 
         .profile-stats li:last-of-type {

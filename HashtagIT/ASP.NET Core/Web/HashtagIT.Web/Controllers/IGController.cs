@@ -100,5 +100,18 @@
             TopNineViewModel viewModel = await this.iGService.TopNine(userId, username);
             return this.View(viewModel);
         }
+
+        [HttpPost]
+        public IActionResult NotFollowingPost(string username)
+        {
+            return this.RedirectToAction(nameof(this.NotFollowing), new { username });
+        }
+
+        public async Task<IActionResult> NotFollowing(string username)
+        {
+            var userId = this.userManager.GetUserId(this.User);
+            NotFollowingViewModel viewModel = await this.iGService.NotFollowinBack(userId, username);
+            return this.View(viewModel);
+        }
     }
 }

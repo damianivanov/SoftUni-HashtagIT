@@ -34,14 +34,14 @@ namespace HashtagIT.Web.Areas.Moderation.Controllers
         {
             if (id == null)
             {
-                return NotFound();
+                return View("Error");
             }
 
             var category = await _context.Categories
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (category == null)
             {
-                return NotFound();
+                return View("Error");
             }
 
             return View(category);
@@ -74,13 +74,13 @@ namespace HashtagIT.Web.Areas.Moderation.Controllers
         {
             if (id == null)
             {
-                return NotFound();
+                return View("Error");
             }
 
             var category = await _context.Categories.FindAsync(id);
             if (category == null)
             {
-                return NotFound();
+                return View("Error");
             }
             return View(category);
         }
@@ -106,7 +106,7 @@ namespace HashtagIT.Web.Areas.Moderation.Controllers
                 {
                     if (!CategoryExists(category.Id))
                     {
-                        return NotFound();
+                        return View("Error");
                     }
                     else
                     {
@@ -123,14 +123,14 @@ namespace HashtagIT.Web.Areas.Moderation.Controllers
         {
             if (id == null)
             {
-                return NotFound();
+                return View("Error");
             }
 
             var category = await _context.Categories
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (category == null)
             {
-                return NotFound();
+                return View("Error");
             }
 
             return View(category);

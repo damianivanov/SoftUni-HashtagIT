@@ -72,11 +72,26 @@
             // InstaMedia Post to Model Post
             foreach (var post in topNine)
             {
+                string photoUrl;
+
+                if (post.Carousel != null)
+                {
+                     photoUrl = post.Carousel[0].Images[1].Uri;
+                }
+                else if (post.Videos.Count != 0)
+                {
+                     photoUrl = post.Videos[0].Uri;
+                }
+                else
+                {
+                    photoUrl = post.Images[1].Uri;
+                }
+
                 var postModel = new Post
                 {
                     IGUserName = username,
                     InstaMedia = post,
-                    PostPhoto = post.Images[1].Uri,
+                    PostPhoto = photoUrl,
                     Likes = post.LikesCount,
                     Comments = post.CommentsCount,
                     HashtagSet = await this.FindHashtagSet(post),
@@ -133,6 +148,31 @@
             }
 
             return false;
+        }
+
+        public async Task<NotFollowingViewModel> NotFollowinBack(string userId, string username)
+        {
+            this.instaApi = this.api.GetInstance(userId, username);
+
+            var following = await this.instaApi.UserProcessor.GetUserFollowingAsync(username, PaginationParameters.Empty);
+            var followers = await this.instaApi.UserProcessor.GetUserFollowersAsync(username, PaginationParameters.Empty);
+
+            var notFollowing = new List<InstaUserShort>();
+
+            foreach (var user in following.Value)
+            {
+                if (!followers.Value.Contains(user))
+                {
+                    notFollowing.Add(user);
+                }
+            }
+
+            var viewModel = new NotFollowingViewModel
+            {
+                Users = notFollowing,
+            };
+
+            return viewModel;
         }
 
         private async Task<string> Add(string userId, UserSessionData user)

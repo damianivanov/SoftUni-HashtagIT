@@ -1,0 +1,34 @@
+﻿@model HashtagIT.Web.ViewModels.IG.NotFollowingViewModel
+@{
+    ViewData["Title"] = "NotFollowing";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1 class="text-center">Not Following You</h1>
+<div class="container">
+    <ul class="list-group">
+
+        @foreach (var user in Model.Users)
+        {
+            <li class="list-group-item">
+                <a id="https://www.instagram.com/@user.UserName">
+                    <img src="@user.ProfilePicUrl" style="width:40px; height:40px; border-radius: 50%; display:inline-block;"/>
+                    <label class="font-weight-bold" >@user.UserName</label>
+                </a>
+            </li>
+        }
+    </ul>
+</div>
+
+@section Scripts
+{
+    <script>
+        const posts = document.querySelectorAll('.list-group-item');
+        posts.forEach(post => {
+            post.addEventListener('click', () => {
+                const imgUrl = post.firstElementChild.id.split("?")[0];
+                window.open(imgUrl, '_blank');
+            });
+        });
+    </script>
+}

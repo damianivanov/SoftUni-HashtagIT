@@ -36,14 +36,14 @@ namespace HashtagIT.Web.Areas.Administration.Controllers
         {
             if (id == null)
             {
-                return NotFound();
+                return View("Error");
             }
 
             var applicationRole = await _context.Roles
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (applicationRole == null)
             {
-                return NotFound();
+                return View("Error");
             }
 
             return View(applicationRole);
@@ -76,13 +76,13 @@ namespace HashtagIT.Web.Areas.Administration.Controllers
         {
             if (id == null)
             {
-                return NotFound();
+                return View("Error");
             }
 
             var applicationRole = await _context.Roles.FindAsync(id);
             if (applicationRole == null)
             {
-                return NotFound();
+                return View("Error");
             }
             return View(applicationRole);
         }
@@ -107,7 +107,7 @@ namespace HashtagIT.Web.Areas.Administration.Controllers
                 {
                     if (!ApplicationRoleExists(applicationRole.Id))
                     {
-                        return NotFound();
+                        return View("Error");
                     }
                     else
                     {
@@ -124,14 +124,14 @@ namespace HashtagIT.Web.Areas.Administration.Controllers
         {
             if (id == null)
             {
-                return NotFound();
+                return View("Error");
             }
 
             var applicationRole = await _context.Roles
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (applicationRole == null)
             {
-                return NotFound();
+                return View("Error");
             }
 
             return View(applicationRole);

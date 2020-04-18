@@ -60,18 +60,23 @@
 
         public IActionResult ById(int id)
         {
-            var hashtagViewModel = this.hashtagSetsService.GetById<HashtagSetViewModel>(id);
-            return this.View(hashtagViewModel);
+            var userId = this.userManager.GetUserId(this.User);
+            if (this.hashtagSetsService.IsOwner(id, userId) || this.User.IsInRole("Moderator"))
+            {
+                var hashtagViewModel = this.hashtagSetsService.GetById<HashtagSetViewModel>(id);
+                if (hashtagViewModel != null)
+                {
+                    return this.View(hashtagViewModel);
+                }
+            }
+
+            return this.View("Error");
         }
 
         public async Task<IActionResult> Delete(int id)
         {
             var userId = this.userManager.GetUserId(this.User);
-            if (this.User.IsInRole(GlobalConstants.AdministratorRoleName))
-            {
-                await this.hashtagSetsService.DeleteByIdAsync(id, userId, true);
-            }
-            else
+            if (this.hashtagSetsService.IsOwner(id, userId) || this.User.IsInRole("Moderator"))
             {
                 await this.hashtagSetsService.DeleteByIdAsync(id, userId);
             }
@@ -95,7 +100,6 @@
             }
 
             return this.View("Error");
-
         }
 
         [HttpPost]

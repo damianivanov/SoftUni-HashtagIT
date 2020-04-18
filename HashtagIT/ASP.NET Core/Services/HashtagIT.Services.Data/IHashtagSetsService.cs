@@ -14,7 +14,7 @@
 
         IEnumerable<T> GetAllByUser<T>(string id, int? take = null, int skip = 0);
 
-        Task DeleteByIdAsync(int id, string userId, bool isAdmin = false);
+        Task DeleteByIdAsync(int id, string userId);
 
         IEnumerable<T> GetPublic<T>(int? take = null, int skip = 0);
 
