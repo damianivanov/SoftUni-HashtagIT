@@ -13,5 +13,7 @@
         Task<TopNineViewModel> TopNine(string userId, string username);
 
         Task<NotFollowingViewModel> NotFollowinBack(string userId, string username);
+
+        Task<FriendshipViewModel> Friendship(string userId, string username);
     }
 }

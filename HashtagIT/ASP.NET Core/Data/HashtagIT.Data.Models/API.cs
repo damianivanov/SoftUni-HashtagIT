@@ -48,20 +48,13 @@
                 UserName = username,
                 Password = password,
             };
-            if (!users.ContainsKey(username))
-            {
-                users.Add(username, user);
-            }
 
             var api = InstaApiBuilder.CreateBuilder().SetUser(user).Build();
             var logInResult = await api.LoginAsync();
-            if (!logInResult.Succeeded)
+
+            if (!users.ContainsKey(username))
             {
-                var challenge = await api.GetChallengeRequireVerifyMethodAsync();
-                if (challenge.Succeeded)
-                {
-                     await api.RequestVerifyCodeToSMSForChallengeRequireAsync();
-                }
+                users.Add(username, user);
             }
 
             if (instagrams.ContainsKey(userId))

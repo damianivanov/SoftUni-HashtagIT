@@ -46,6 +46,7 @@
             if (!this.instaApi.IsUserAuthenticated)
             {
                 var challenge = await this.instaApi.GetChallengeRequireVerifyMethodAsync();
+                await this.instaApi.SendTwoFactorLoginSMSAsync();
                 return challenge.Value.StepData.PhoneNumber;
             }
 
@@ -53,6 +54,20 @@
             var user = this.api.GetByName(username);
             await this.Add(userId, user);
             return string.Empty;
+        }
+
+        public async Task<bool> TwoFactor(string username, string password, string code, string userId)
+        {
+            this.instaApi = this.api.GetInstance(userId, username);
+            await this.instaApi.VerifyCodeForChallengeRequireAsync(code);
+            if (this.instaApi.IsUserAuthenticated)
+            {
+                var user = this.api.GetByName(username);
+                await this.Add(userId, user);
+                return true;
+            }
+
+            return false;
         }
 
         // TODO Refactor
@@ -136,26 +151,12 @@
             return viewModel;
         }
 
-        public async Task<bool> TwoFactor(string username, string password, string code, string userId)
-        {
-            this.instaApi = this.api.GetInstance(userId, username);
-            await this.instaApi.VerifyCodeForChallengeRequireAsync(code);
-            if (this.instaApi.IsUserAuthenticated)
-            {
-                var user = this.api.GetByName(username);
-                await this.Add(userId, user);
-                return true;
-            }
-
-            return false;
-        }
-
         public async Task<NotFollowingViewModel> NotFollowinBack(string userId, string username)
         {
             this.instaApi = this.api.GetInstance(userId, username);
 
+            var followers = await this.instaApi.UserProcessor.GetUserFollowersAsync(username, PaginationParameters.MaxPagesToLoad(1));
             var following = await this.instaApi.UserProcessor.GetUserFollowingAsync(username, PaginationParameters.Empty);
-            var followers = await this.instaApi.UserProcessor.GetUserFollowersAsync(username, PaginationParameters.Empty);
 
             var notFollowing = new List<InstaUserShort>();
 
@@ -175,10 +176,43 @@
             return viewModel;
         }
 
+        public async Task<FriendshipViewModel> Friendship(string userId, string username)
+        {
+            this.instaApi = this.api.GetInstance(userId);
+
+            var profile = await this.instaApi.UserProcessor.GetUserInfoByUsernameAsync(username);
+
+            var status = await this.instaApi.UserProcessor.GetFriendshipStatusAsync(profile.Value.Pk);
+
+            FriendshipViewModel model = new FriendshipViewModel
+            {
+                IGUserName = username,
+                IGFullName = profile.Value.FullName,
+                ProfilePicUrl = profile.Value.ProfilePicUrl,
+                Friends = status.Value.Following,
+                Caption = profile.Value.Biography,
+            };
+            return model;
+        }
+
         private async Task<string> Add(string userId, UserSessionData user)
         {
             var followersCount = await this.instaApi.UserProcessor.GetUserFollowersAsync(user.UserName, PaginationParameters.Empty);
             var followingCount = await this.instaApi.UserProcessor.GetUserFollowingAsync(user.UserName, PaginationParameters.Empty);
+
+            long followers = 0;
+            long following = 0;
+
+            if (followersCount.Value != null)
+            {
+                followers = followersCount.Value.Count;
+            }
+
+            if (followingCount.Value != null)
+            {
+                following = followingCount.Value.Count;
+            }
+
             IGUser igUser = new IGUser
             {
                 UserId = userId,
@@ -186,8 +220,8 @@
                 IGProfileId = user.LoggedInUser.Pk,
                 IGUserName = user.LoggedInUser.UserName,
                 ProfilePicUrl = user.LoggedInUser.ProfilePicUrl,
-                FollowersCount = followersCount.Value.Count,
-                FollowingCount = followingCount.Value.Count,
+                FollowersCount = followers,
+                FollowingCount = following,
             };
             var existingUser = this.igUsersRepository.All().Where(u => u.IGUserName == igUser.IGUserName).FirstOrDefault();
             if (existingUser != null)

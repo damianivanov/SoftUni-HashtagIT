@@ -113,5 +113,18 @@
             NotFollowingViewModel viewModel = await this.iGService.NotFollowinBack(userId, username);
             return this.View(viewModel);
         }
+
+        [HttpPost]
+        public IActionResult FriendshipPost(string username)
+        {
+            return this.RedirectToAction(nameof(this.Friendship), new { username });
+        }
+
+        public async Task<IActionResult> Friendship(string username)
+        {
+            var userId = this.userManager.GetUserId(this.User);
+            FriendshipViewModel viewModel = await this.iGService.Friendship(userId, username);
+            return this.View(viewModel);
+        }
     }
 }
