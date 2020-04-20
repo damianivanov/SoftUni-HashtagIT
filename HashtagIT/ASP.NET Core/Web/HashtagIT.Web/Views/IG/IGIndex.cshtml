@@ -1,6 +1,7 @@
-﻿
-    <div class="container">
-        <div id="cards" class="row justify-content-between">
+﻿@model HashtagIT.Web.ViewModels.IG.IndexPageViewModel
+<div class="container">
+    <div id="cards">
+        <div class="row justify-content-between">
             <div class="col-md-4 p-3">
                 <div class="card mb-4 text-white bg-dark">
                     <img class="card-img-top" src="~/img/topNine.jpg" alt="Card image cap">
@@ -17,13 +18,15 @@
                     </div>
                 </div>
             </div>
+
             <div class="col-md-4 p-3">
                 <div class="card mb-4 text-white bg-dark">
                     <img class="card-img-top" src="~/img/instagram.jpg" alt="Card image cap">
                     <div class="card-body">
                         <h5 class="card-title">Check Friendship</h5>
                         <p class="card-text">
-                        (You have to be logged with your own Instagram Accout).</p>
+                            (Login with your Instagram Accout).
+                        </p>
                         <form id="form2" method="post" asp-controller="IG" asp-action="Friendship">
                             <span class="input-group-text" id="basic-addon1">
                                 @@
@@ -34,23 +37,47 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-4 p-3">
-                <div class="card mb-4 text-white bg-dark">
-                    <img class="card-img-top" src="~/img/instagram.jpg" alt="Card image cap">
-                    <div class="card-body">
-                        <h5 class="card-title">Not Following You</h5>
-                        <p class="card-text">See who is not following you back.</p>
-                        <form id="form2" method="post" asp-controller="IG" asp-action="NotFollowingPost">
-                            <span class="input-group-text" id="basic-addon1">
-                                @@
-                                <input name="username" class="ml-1 form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1" required>
-                            </span>
-                            <button type="submit" class="mt-2 btn btn-outline-light" onclick="Loading()">CHECK</button>
-                        </form>
-                    </div>
+
+            @*<div class="col-md-4 p-3">
+            <div class="card mb-4 text-white bg-dark">
+                <img class="card-img-top" src="~/img/instagram.jpg" alt="Card image cap">
+                <div class="card-body">
+                    <h5 class="card-title">Not Following You</h5>
+                    <p class="card-text">See who is not following you back.</p>
+                    <form id="form2" method="post" asp-controller="IG" asp-action="NotFollowingPost">
+                        <span class="input-group-text" id="basic-addon1">
+                            @@
+                            <input name="username" class="ml-1 form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1" required>
+                        </span>
+                        <button type="submit" class="mt-2 btn btn-outline-light" onclick="Loading()">CHECK</button>
+                    </form>
                 </div>
             </div>
+        </div>*@
         </div>
+
+        <h3 class="text-lg-center p-2">Top Hashtags</h3>
+        <hr />
+        <div class="row justify-content-between">
+                @foreach (var hashset in Model.Hashsets)
+                {
+                    <div class="col col-2">
+                        <h6 class="mb-1">
+                            <i class="fas fa-user"></i>
+                            @hashset.Username
+                        </h6>
+                        <div class="border-left" style="border-color:#1d1d1d">
+                        <label class="mb-1" style="font-size: 10px; border:2px; border-color:black;">@hashset.Text</label>
+                        </div>
+                        <small class="text-muted ml-2">
+                            <i class="fas fa-heart" style="color:#D3212D;"></i>
+                            @hashset.TotalLikes
+                        </small>
+                    </div>
+                }
+        </div>
+
+        
 
         <div id="message" class="text-center p-4" hidden>
             <h6>
@@ -71,8 +98,9 @@
         </div>
 
     </div>
+</div>
 
-@section Scripts{ 
+@section Scripts{
 
     <script>
         function Loading() {
@@ -80,11 +108,12 @@
             form.hidden = true;
 
             var loader = document.getElementById("loader");
-            loader.hidden = false;  
+            loader.hidden = false;
 
             var text = document.getElementById("message");
             text.hidden = false;
         }
+
     </script>
 
 }

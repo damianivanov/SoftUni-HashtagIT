@@ -32,6 +32,14 @@ a:hover {
     font-size: 16px;
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 }
+.mineTextArea !important {
+    background-color:white;
+    border: none;
+    resize: none;
+    user-select: none;
+    outline: none;
+}
+
 .text-primary {
   color: #fed136 !important;
 }

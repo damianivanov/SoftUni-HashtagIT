@@ -34,7 +34,9 @@
         {
             if (username == "system")
             {
-                var guest = this.api.GetByName("softuni.project");
+                this.instaApi = this.api.GetInstance("system");
+                var guest_username = this.instaApi.GetLoggedUser().UserName;
+                var guest = this.api.GetByName(guest_username);
                 this.instaApi = await this.api.Login(userId, guest.UserName, guest.Password);
                 await this.Add(userId, guest);
                 return string.Empty;
@@ -192,6 +194,33 @@
                 Friends = status.Value.Following,
                 Caption = profile.Value.Biography,
             };
+            return model;
+        }
+
+        public IndexPageViewModel TopHashtags()
+        {
+            var hashtagSets = this.postRepository
+                .All()
+                .OrderByDescending(x => x.Likes)
+                .Select(x => new { x.Likes, x.HashtagSet, x.IGUserName })
+                .Take(5)
+                .ToList();
+            HashSet<HashSetInfoModel> hashSets = new HashSet<HashSetInfoModel>();
+            foreach (var item in hashtagSets)
+            {
+                hashSets.Add(new HashSetInfoModel
+                {
+                    Text = item.HashtagSet,
+                    TotalLikes = item.Likes,
+                    Username = item.IGUserName,
+                });
+            }
+
+            IndexPageViewModel model = new IndexPageViewModel
+            {
+                Hashsets = hashSets,
+            };
+
             return model;
         }
 

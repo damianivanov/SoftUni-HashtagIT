@@ -15,5 +15,7 @@
         Task<NotFollowingViewModel> NotFollowinBack(string userId, string username);
 
         Task<FriendshipViewModel> Friendship(string userId, string username);
+
+        IndexPageViewModel TopHashtags();
     }
 }
