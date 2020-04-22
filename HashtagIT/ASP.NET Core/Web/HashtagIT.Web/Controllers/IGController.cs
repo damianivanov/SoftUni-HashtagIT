@@ -102,18 +102,19 @@
             return this.View(viewModel);
         }
 
-        // [HttpPost]
-        // public IActionResult NotFollowingPost(string username)
-        // {
-        //    return this.RedirectToAction(nameof(this.NotFollowing), new { username });
-        // }
+        [HttpPost]
+        public IActionResult NotFollowingPost(string username)
+        {
+            return this.RedirectToAction(nameof(this.NotFollowing), new { username });
+        }
 
-        // public async Task<IActionResult> NotFollowing(string username)
-        // {
-        //    var userId = this.userManager.GetUserId(this.User);
-        //    NotFollowingViewModel viewModel = await this.iGService.NotFollowinBack(userId, username);
-        //    return this.View(viewModel);
-        // }
+        public async Task<IActionResult> NotFollowing(string username)
+        {
+            var userId = this.userManager.GetUserId(this.User);
+            NotFollowingViewModel viewModel = await this.iGService.NotFollowinBack(userId, username);
+            return this.View(viewModel);
+        }
+
         [HttpPost]
         public IActionResult FriendshipPost(string username)
         {
@@ -125,6 +126,19 @@
             var userId = this.userManager.GetUserId(this.User);
             FriendshipViewModel viewModel = await this.iGService.Friendship(userId, username);
             return this.View(viewModel);
+        }
+
+        [HttpPost]
+        public IActionResult GenerateSetPost(string hashtag)
+        {
+            return this.RedirectToAction(nameof(this.Friendship), new { hashtag });
+        }
+
+        public async Task<IActionResult> GenerateSet(string hashtag)
+        {
+            var userId = this.userManager.GetUserId(this.User);
+            var model = await this.iGService.GenerateSet(userId, hashtag);
+            return this.View(model);
         }
     }
 }

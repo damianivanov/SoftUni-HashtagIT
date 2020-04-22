@@ -4,43 +4,36 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h3 class="text-center">Friendship with @@@Model.IGUserName</h3>
+<h3 class="text-center p-3">Friendship with @@@Model.IGUserName</h3>
 <br />
-<div class="container">
+<div class="container p-lg-5">
 
     <div class="profile">
         <div class="profile-image">
             <img src="@Model.ProfilePicUrl" alt="">
         </div>
 
-        <div class="">
-            <a href="https://www.instagram.com/@Model.IGUserName" target="_blank" style="color:black">
-                <h4 class="font-weight-light">@Model.IGUserName</h4>
+        <div class="row justify-content-start">
+            <a  class="col col-4" href="https://www.instagram.com/@Model.IGUserName" target="_blank" style="color:black">
+                <h4 class="font-weight-light">@@@Model.IGUserName</h4>
             </a>
+            <label>
+            @if (Model.Friends)
+            {
+                <i class="fas fa-check-circle"></i>
+                <small>mutual follow</small>
+            }
+            else
+            {
+                <i class="fas fa-times-circle"></i>
+                <small>not following you back</small>
+            }
+            </label>
         </div>
 
         <div class="profile-bio">
-            <p>
-                <span class="profile-real-name">@Model.IGFullName</span>
-                <div class="container">
-                @if (Model.Friends)
-                {
-                    <i class="fas fa-check-circle"></i>
-                    <small>mutual follow</small>
-                }
-                else
-                {
-                    <i class="fas fa-times-circle"></i>
-                    <small>not following you back</small>
-                }
+                <h3>@Model.Caption</h3>
         </div>
-        <h4 style="font-size:13px; margin-top:5px;">
-            @Model.Caption
-        </h4>
-        </p>
     </div>
+</div>
 
-            
-        </div>
-    </div>
- 

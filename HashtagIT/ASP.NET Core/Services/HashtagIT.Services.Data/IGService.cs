@@ -9,6 +9,7 @@
 
     using HashtagIT.Data.Common.Repositories;
     using HashtagIT.Data.Models;
+    using HashtagIT.Services.Mapping;
     using HashtagIT.Web.ViewModels.IG;
     using InstagramApiSharp;
     using InstagramApiSharp.API;
@@ -157,7 +158,7 @@
         {
             this.instaApi = this.api.GetInstance(userId, username);
 
-            var followers = await this.instaApi.UserProcessor.GetUserFollowersAsync(username, PaginationParameters.MaxPagesToLoad(1));
+            var followers = await this.instaApi.UserProcessor.GetUserFollowersAsync(username, PaginationParameters.Empty);
             var following = await this.instaApi.UserProcessor.GetUserFollowingAsync(username, PaginationParameters.Empty);
 
             var notFollowing = new List<InstaUserShort>();
@@ -191,7 +192,7 @@
                 IGUserName = username,
                 IGFullName = profile.Value.FullName,
                 ProfilePicUrl = profile.Value.ProfilePicUrl,
-                Friends = status.Value.Following,
+                Friends = status.Value.FollowedBy && status.Value.Following,
                 Caption = profile.Value.Biography,
             };
             return model;
@@ -219,6 +220,20 @@
             IndexPageViewModel model = new IndexPageViewModel
             {
                 Hashsets = hashSets,
+            };
+
+            return model;
+        }
+
+        public async Task<SetFromWordViewModel> GenerateSet(string userId, string word)
+        {
+            this.instaApi = this.api.GetInstance(userId);
+            var hashtag = Regex.Match(word, @"#\w+[_]\w+$|#\w+$|\w+$|\w+[_]+\w$");
+            var sets = await this.Hashtags(hashtag.Name);
+            var model = new SetFromWordViewModel
+            {
+                Sets = sets,
+                Word = word,
             };
 
             return model;
@@ -280,18 +295,98 @@
                 }
             }
 
-            var comments = await this.instaApi.CommentProcessor.GetMediaCommentsAsync(media.InstaIdentifier, PaginationParameters.Empty);
+            var comments = await this.instaApi.CommentProcessor.GetMediaCommentsAsync(media.InstaIdentifier, PaginationParameters.MaxPagesToLoad(1));
 
             foreach (var comment in comments.Value.Comments)
             {
-                var matches = Regex.Matches(comment.Text, @"#+\w+");
-                foreach (var match in matches)
+                try
                 {
-                    sb.Append(match.ToString() + " ");
+                    var matches = Regex.Matches(comment.Text, @"#+\w+");
+                    foreach (var match in matches)
+                    {
+                        sb.Append(match.ToString() + " ");
+                    }
+
+                    if (matches.Count >= 10)
+                    {
+                        return sb.ToString().TrimEnd();
+                    }
+                }
+                catch (Exception)
+                {
                 }
             }
 
             return sb.ToString().TrimEnd();
+        }
+
+        private async Task<ICollection<string>> Hashtags(string hash)
+        {
+            var hashtagSetsFromPosts = await this.HashtagsFromHashtagsTopPosts(hash);
+            List<string> hashtags = new List<string>();
+            foreach (var set in hashtagSetsFromPosts)
+            {
+                List<string> tags = set.Split(' ').ToList();
+                foreach (var tag in tags)
+                {
+                    hashtags.Add(tag);
+                }
+
+                hashtags.AddRange(tags.ToList());
+            }
+
+            var randomized = this.Random(hashtags);
+            var relatedhashtags = await this.RelatedHashtags(hash);
+            hashtags.AddRange(relatedhashtags);
+            List<string> result = new List<string>();
+            for (int i = 0; i < 3; i++)
+            {
+                var tmp = randomized.Distinct().Skip(20 * i).Take(20).ToList();
+                tmp.AddRange(relatedhashtags);
+                tmp = this.Random(tmp).ToList();
+                result.Add(string.Join(' ', tmp));
+            }
+
+            return result;
+        }
+
+        private async Task<ICollection<string>> HashtagsFromHashtagsTopPosts(string hash)
+        {
+            var topPosts = await this.instaApi.HashtagProcessor.GetTopHashtagMediaListAsync(hash, PaginationParameters.MaxPagesToLoad(1));
+            var mediaList = topPosts.Value.Medias;
+            HashSet<string> hashtags = new HashSet<string>();
+            foreach (var media in mediaList.Take(5).ToList())
+            {
+                var hashtagSet = await this.FindHashtagSet(media);
+                hashtags.Add(hashtagSet);
+            }
+
+            return hashtags.Distinct().ToList();
+        }
+
+        private async Task<ICollection<string>> RelatedHashtags(string hash)
+        {
+            var medialist = await this.instaApi.HashtagProcessor.GetTopHashtagMediaListAsync(hash, PaginationParameters.MaxPagesToLoad(1));
+            var listOfHashtags = medialist.Value.RelatedHashtags.Select(x => "#" + x.Name).ToList();
+            return listOfHashtags;
+        }
+
+        private ICollection<string> Random(List<string> tags)
+        {
+            Random rnd = new Random();
+            List<string> randomized = new List<string>();
+            for (int i = tags.Count; i > 0; i--)
+            {
+                int curr = rnd.Next(0, i);
+                if (!randomized.Any(e => e == tags.ElementAt(curr)))
+                {
+                    randomized.Add(tags.ElementAt(curr));
+                }
+
+                tags.RemoveAt(curr);
+            }
+
+            return randomized;
         }
     }
 }

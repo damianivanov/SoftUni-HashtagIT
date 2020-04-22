@@ -17,5 +17,7 @@
         Task<FriendshipViewModel> Friendship(string userId, string username);
 
         IndexPageViewModel TopHashtags();
+
+        Task<SetFromWordViewModel> GenerateSet(string userId, string word);
     }
 }

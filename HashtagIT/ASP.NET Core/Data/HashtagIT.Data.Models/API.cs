@@ -22,6 +22,8 @@
             this.configuration = configuration;
             instagrams = new Dictionary<string, Dictionary<string, IInstaApi>>();
             users = new Dictionary<string, UserSessionData>();
+
+            // Make multiple system accounts and manage the traffic
             _ = this.Login("system", this.configuration["Instagram:SystemUser"], this.configuration["Instagram:SystemPass"]).Result;
         }
 

@@ -1,0 +1,17 @@
+﻿@model HashtagIT.Web.ViewModels.IG.SetFromWordViewModel
+@{
+    ViewData["Title"] = "GenerateSet";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1 class="text-center p-2">Generate Set From #@Model.Word</h1>
+
+@foreach (var set in Model.Sets)
+{
+    <div class="row justify-content-start p-4">
+        <div class="rounded-right">
+            <label class="text-dark bg-light">@set</label>
+        </div>        
+    </div>
+}
+
