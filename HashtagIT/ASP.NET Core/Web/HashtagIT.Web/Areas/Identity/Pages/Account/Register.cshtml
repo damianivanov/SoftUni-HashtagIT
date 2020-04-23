@@ -10,11 +10,11 @@
             <h1>@ViewData["Title"]</h1>
             <br />
         </div>
-        <div class=" row justify-content-center">
+        <div class="">
             <h4>Create a new account.</h4>
         </div>
-        <hr />
-        <div class="row">
+        <hr />  
+        <div class="row justify-content-start">
             <div class="col-md-4">
                 <form asp-route-returnUrl="@Model.ReturnUrl" method="post">
                     <div asp-validation-summary="All" class="text-danger"></div>
@@ -41,10 +41,13 @@
                     <button type="submit" class="btn btn-primary">Register</button>
                 </form>
             </div>
+            <!--External Logins
+                
             <div class="col-md-6 col-md-offset-2">
                 <section>
                     <h4>Use another service to register.</h4>
                     <hr />
+                    @*
                     @{
                         if ((Model.ExternalLogins?.Count ?? 0) == 0)
                         {
@@ -69,8 +72,10 @@
                             </form>
                         }
                     }
+            *@
                 </section>
             </div>
+            -->
         </div>
     </div>  
 

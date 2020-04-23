@@ -112,6 +112,7 @@
                 return this.RedirectToAction(nameof(this.ById), new { id = viewModel.Id });
             }
 
+            viewModel.Categories = this.categoriesService.GetAll<CategoryDropDownViewModel>();
             return this.View(viewModel);
         }
 

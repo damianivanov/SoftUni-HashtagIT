@@ -44,7 +44,16 @@
                 return this.View(viewModel);
             }
 
-            var phone = await this.iGService.Login(userId, viewModel.IGUserName, viewModel.Password);
+            string phone;
+            try
+            {
+                phone = await this.iGService.Login(userId, viewModel.IGUserName, viewModel.Password);
+            }
+            catch (System.Exception)
+            {
+                return this.RedirectToAction(nameof(this.Login));
+            }
+
             string encryptedPassword = Cipher.Encrypt(viewModel.Password, viewModel.IGUserName);
 
             viewModel.Phone = phone;
@@ -71,7 +80,7 @@
 
             if (!result)
             {
-                this.RedirectToAction(nameof(this.Login));
+                return this.RedirectToAction(nameof(this.Login));
             }
 
             return this.RedirectToAction(nameof(this.IGIndex));

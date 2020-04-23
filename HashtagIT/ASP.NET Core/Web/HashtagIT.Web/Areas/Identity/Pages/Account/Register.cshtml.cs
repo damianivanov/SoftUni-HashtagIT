@@ -83,6 +83,7 @@ namespace HashtagIT.Web.Areas.Identity.Pages.Account
             if (ModelState.IsValid)
             {
                 var user = new ApplicationUser { UserName = this.Input.Username, Email = this.Input.Email };
+                var IsFree = await this._userManager.FindByEmailAsync(this.Input.Email);
                 var result = await this._userManager.CreateAsync(user, this.Input.Password);
                 if (result.Succeeded)
                 {

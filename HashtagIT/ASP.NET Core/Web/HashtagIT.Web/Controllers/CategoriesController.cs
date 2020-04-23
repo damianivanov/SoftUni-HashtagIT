@@ -5,6 +5,7 @@
     using System.Linq;
     using System.Threading.Tasks;
 
+    using HashtagIT.Common;
     using HashtagIT.Data.Common.Repositories;
     using HashtagIT.Data.Models;
     using HashtagIT.Services.Data;
@@ -20,13 +21,14 @@
             this.categoriesService = categoriesService;
         }
 
-        [Authorize(Roles = "Administrator")]
+        [Authorize(Roles = "Moderator")]
         public IActionResult Add()
         {
             return this.View();
         }
 
         [HttpPost]
+        [Authorize(Roles = "Moderator")]
         public async Task<IActionResult> Add(string name)
         {
            await this.categoriesService.AddCategory(name);

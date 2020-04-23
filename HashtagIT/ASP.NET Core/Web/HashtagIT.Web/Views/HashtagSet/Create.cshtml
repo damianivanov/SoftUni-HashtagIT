@@ -14,7 +14,7 @@
     @if (this.User.IsInRole(GlobalConstants.AdministratorRoleName) || this.User.IsInRole("Moderator"))
     {
         <div class="row">
-            <a class="btn ml-auto btn-danger" href="/Categories/Add">Add Category</a>
+            <a class="btn ml-auto btn-danger" asp-controller="Categories" asp-action="Add">Add Category</a>
         </div>
     }
 
@@ -41,7 +41,7 @@
         <div>
             <i class="fas fa-user-lock"></i>
             <label>Private</label>
-            <input type="checkbox" asp-for="IsPrivate" required/>
+            <input type="checkbox" asp-for="IsPrivate"/>
         </div>
 
         <hr />

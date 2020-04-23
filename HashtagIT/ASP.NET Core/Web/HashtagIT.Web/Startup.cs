@@ -103,6 +103,7 @@
             }
             else
             {
+                app.UseStatusCodePagesWithRedirects("/Home/Error");
                 app.UseExceptionHandler("/Home/Error");
                 app.UseHsts();
             }

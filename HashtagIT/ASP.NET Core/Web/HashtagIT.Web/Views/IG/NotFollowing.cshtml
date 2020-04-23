@@ -12,7 +12,7 @@
         @foreach (var user in Model.Users)
         {
             <li class="list-group-item">
-                <a id="https://www.instagram.com/@user.UserName">
+                <a style="cursor:pointer" id="https://www.instagram.com/@user.UserName">
                     <img src="@user.ProfilePicUrl" style="width:40px; height:40px; border-radius: 50%; display:inline-block;"/>
                     <label class="font-weight-bold" >@user.UserName</label>
                 </a>

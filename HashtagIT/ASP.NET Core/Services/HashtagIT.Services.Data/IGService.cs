@@ -49,7 +49,7 @@
             if (!this.instaApi.IsUserAuthenticated)
             {
                 var challenge = await this.instaApi.GetChallengeRequireVerifyMethodAsync();
-                await this.instaApi.SendTwoFactorLoginSMSAsync();
+                await this.instaApi.RequestVerifyCodeToSMSForChallengeRequireAsync();
                 return challenge.Value.StepData.PhoneNumber;
             }
 
@@ -229,7 +229,7 @@
         {
             this.instaApi = this.api.GetInstance(userId);
             var hashtag = Regex.Match(word, @"#\w+[_]\w+$|#\w+$|\w+$|\w+[_]+\w$");
-            var sets = await this.Hashtags(hashtag.Name);
+            var sets = await this.Hashtags(hashtag.Value);
             var model = new SetFromWordViewModel
             {
                 Sets = sets,

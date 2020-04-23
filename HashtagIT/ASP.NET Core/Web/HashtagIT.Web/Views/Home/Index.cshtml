@@ -15,7 +15,7 @@
         <div class="intro-text">
             <div class="intro-lead-in">...</div>
             <div class="intro-heading text-uppercase">..</div>
-            <a class="btn btn-primary btn-xl text-uppercase js-scroll-trigger" href="#services">Tell Me More</a>
+            <a class="btn btn-primary btn-xl text-uppercase js-scroll-trigger" href="#tools">Tell Me More</a>
         </div>
     </div>
 </header>
@@ -35,7 +35,7 @@
             <!--Sets-->
             <div class="col-md-4">
                 <span class="fa-stack fa-4x">
-                    <a href="/HashtagSet/MySets">
+                    <a asp-controller="HashtagSet" asp-action="MySets">
                         <i class="fas fa-circle fa-stack-2x text-primary"></i>
                         <i class="fas fa-sticky-note fa-stack-1x fa-inverse"></i>
                     </a>
@@ -46,7 +46,7 @@
             <!--Instagram-->
             <div class="col-md-4">
                 <span class="fa-stack fa-4x">
-                    <a href="/IG/IGIndex">
+                    <a asp-controller="IG" asp-action="IGIndex">
                         <i class="fas fa-circle fa-stack-2x text-primary"></i>
                         <i class="fab fa-instagram fa-stack-1x fa-inverse"></i>
                     </a>
@@ -57,13 +57,13 @@
             <!--Forum for Sets-->
             <div class="col-md-4">
                 <span class="fa-stack fa-4x">
-                    <a href="/HashtagSet/Public">
+                    <a asp-controller="HashtagSet" asp-action="Public">
                         <i class="fas fa-circle fa-stack-2x text-primary"></i>
-                        <i class="fas fa-lock fa-stack-1x fa-inverse"></i>
+                        <i class="fas fa-users fa-stack-1x fa-inverse"></i>
                     </a>
                 </span>
-                <h4 class="service-heading">Web Security</h4>
-                <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minima maxime quam architecto quo inventore harum ex magni, dicta impedit.</p>
+                <h4 class="service-heading">Public Hashtags</h4>
+                <p class="text-muted">Share and Vote for your favorite Hashtag Sets.</p>
             </div>
         </div>
     </div>

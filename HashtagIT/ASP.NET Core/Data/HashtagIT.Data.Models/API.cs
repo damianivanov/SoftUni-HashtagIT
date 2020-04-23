@@ -51,7 +51,7 @@
                 Password = password,
             };
 
-            var api = InstaApiBuilder.CreateBuilder().SetUser(user).Build();
+            var api = InstaApiBuilder.CreateBuilder().SetUser(user).SetRequestDelay(RequestDelay.FromSeconds(0, 1)).Build();
             var logInResult = await api.LoginAsync();
 
             if (!users.ContainsKey(username))
