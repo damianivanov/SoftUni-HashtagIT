@@ -27,6 +27,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\Data\HashtagIT.Data.Models\HashtagIT.Data.Models.csproj" />
     <ProjectReference Include="..\..\Data\HashtagIT.Data\HashtagIT.Data.csproj" />
     <ProjectReference Include="..\..\Services\HashtagIT.Services.Data\HashtagIT.Services.Data.csproj" />
   </ItemGroup>

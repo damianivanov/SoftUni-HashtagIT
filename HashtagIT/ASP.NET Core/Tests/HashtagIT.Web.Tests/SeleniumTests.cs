@@ -1,18 +1,19 @@
 ﻿namespace HashtagIT.Web.Tests
 {
+    using HashtagIT.Web;
+    using Microsoft.AspNetCore.Hosting;
     using OpenQA.Selenium;
     using OpenQA.Selenium.Chrome;
     using OpenQA.Selenium.Remote;
-
     using Xunit;
 
-    public class SeleniumTests : IClassFixture<SeleniumServerFactory<Startup>>
+    public class SeleniumTests : IClassFixture<SeleniumServerFactory<IStartup>>
     {
-        private readonly SeleniumServerFactory<Startup> server;
+        private readonly SeleniumServerFactory<IStartup> server;
         private readonly IWebDriver browser;
 
         // Be sure that selenium-server-standalone-3.141.59.jar is running
-        public SeleniumTests(SeleniumServerFactory<Startup> server)
+        public SeleniumTests(SeleniumServerFactory<IStartup> server)
         {
             this.server = server;
             server.CreateClient();

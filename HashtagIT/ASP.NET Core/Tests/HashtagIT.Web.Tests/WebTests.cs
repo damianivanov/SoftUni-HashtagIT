@@ -3,15 +3,16 @@
     using System.Net;
     using System.Threading.Tasks;
 
+    using HashtagIT.Web;
+    using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Mvc.Testing;
-
     using Xunit;
 
-    public class WebTests : IClassFixture<WebApplicationFactory<Startup>>
+    public class WebTests : IClassFixture<WebApplicationFactory<IStartup>>
     {
-        private readonly WebApplicationFactory<Startup> server;
+        private readonly WebApplicationFactory<IStartup> server;
 
-        public WebTests(WebApplicationFactory<Startup> server)
+        public WebTests(WebApplicationFactory<IStartup> server)
         {
             this.server = server;
         }

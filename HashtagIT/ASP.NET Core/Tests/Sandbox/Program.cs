@@ -5,6 +5,7 @@
     using System.IO;
     using System.Threading.Tasks;
 
+    using CommandLine;
     using HashtagIT.Data;
     using HashtagIT.Data.Common;
     using HashtagIT.Data.Common.Repositories;
@@ -13,9 +14,6 @@
     using HashtagIT.Data.Seeding;
     using HashtagIT.Services.Data;
     using HashtagIT.Services.Messaging;
-
-    using CommandLine;
-
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;

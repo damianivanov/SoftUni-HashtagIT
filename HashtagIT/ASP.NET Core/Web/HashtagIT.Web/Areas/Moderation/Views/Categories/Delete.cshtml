@@ -51,7 +51,7 @@
     
     <form asp-action="Delete">
         <input type="hidden" asp-for="Id" />
-        <input type="submit" value="Delete" class="btn btn-danger" /> |
+        <input type="submit" value="Delete" class="btn btn-danger" onclick="return confirm('Are you sure you want to Delete @Html.DisplayFor(model => model.Name)');"/> |
         <a asp-action="Index">Back to List</a>
     </form>
 </div>
