@@ -16,6 +16,8 @@
     using InstagramApiSharp.API.Builder;
     using InstagramApiSharp.Classes;
     using InstagramApiSharp.Classes.Models;
+    using MoreLinq.Experimental;
+    using MoreLinq.Extensions;
 
     public class IGService : IIGService
     {
@@ -204,6 +206,8 @@
                 .All()
                 .OrderByDescending(x => x.Likes)
                 .Select(x => new { x.Likes, x.HashtagSet, x.IGUserName })
+                .DistinctBy(x => x.HashtagSet)
+                .DistinctBy(x => x.IGUserName)
                 .Take(5)
                 .ToList();
             HashSet<HashSetInfoModel> hashSets = new HashSet<HashSetInfoModel>();
