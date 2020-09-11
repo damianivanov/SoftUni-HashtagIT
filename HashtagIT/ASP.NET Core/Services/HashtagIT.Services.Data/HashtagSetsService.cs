@@ -42,6 +42,7 @@
                 }
             }
 
+            text = string.Join(' ', hashtags.Distinct().Select(h => "#" + h.ToString()));
             var hashtagSet = new HashtagSet
             {
                 Text = text,

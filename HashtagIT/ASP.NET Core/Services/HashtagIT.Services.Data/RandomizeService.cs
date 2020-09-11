@@ -33,9 +33,8 @@
                 if (!hashtags.Any(e => e == list.ElementAt(curr)))
                 {
                     hashtags.Add(list.ElementAt(curr));
+                    list.RemoveAt(curr);
                 }
-
-                list.RemoveAt(curr);
             }
 
             return string.Join(' ', hashtags);
